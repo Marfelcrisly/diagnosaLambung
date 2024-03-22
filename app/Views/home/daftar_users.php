@@ -12,52 +12,45 @@
             </div>
         </div>
     </div>
+
     <section class="content">
         <div class="container-fluid">
             <div class="row">
-
-            </div>
-        </div>
-        <section class="content">
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-12">
-                        <div class="card">
-                            <div class="card-header">
-                                
-                                <div class="card-body">
-                                    <table id="example2" class="table table-bordered table-hover">
-                                        <thead>
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-body">
+                                <table id="example2" class="table table-bordered table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Email</th>
+                                            <th>Username</th>
+                                            <th>Password</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php $i = 1 ?>
+                                        <?php foreach ($data as $dt) : ?>
                                             <tr>
-                                                <th>Email</th>
-                                                <th>Username</th>
-                                                <th>Password</th>
+                                                <td><?= $dt['email'] ?></td>
+                                                <td><?= $dt['username'] ?></td>
+                                                <td><?= $dt['password_hash'] ?></td>
                                             </tr>
-                                        </thead>
-                                        <tbody>
-                                            <?php $i = 1 ?>
-                                            <?php foreach ($data as $dt) : ?>
-                                                <tr>
-                                                    <td><?= $dt['email'] ?></td>
-                                                    <td><?= $dt['username'] ?></td>
-                                                    <td><?= $dt['password_hash'] ?></td>
-                                                </tr>
-                                            <?php endforeach; ?>
-                                        </tbody>
-                                        <tfoot>
-                                            <tr>
-                                                <th>Email</th>
-                                                <th>Username</th>
-                                                <th>Password</th>
-                                            </tr>
-                                        </tfoot>
-                                    </table>
-                                </div>
+                                        <?php endforeach; ?>
+                                    </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <th>Email</th>
+                                            <th>Username</th>
+                                            <th>Password</th>
+                                        </tr>
+                                    </tfoot>
+                                </table>
                             </div>
                         </div>
                     </div>
                 </div>
-        </section>
+            </div>
     </section>
 </div>
 

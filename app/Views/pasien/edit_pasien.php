@@ -20,7 +20,7 @@
                         <div class="card-header">
                             <h3 class="card-title">Data Pasien</h3>
                         </div>
-                        <form action="<?= base_url('ubah_pasien/' . $pasien['id']); ?>" method="post">
+                        <form action="<?= base_url('perbarui_pasien/' . $pasien['id']); ?>" method="post">
                             <?= csrf_field() ?>
                             <div class="card-body">
                                 <div class="form-group">
