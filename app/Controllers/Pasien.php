@@ -16,7 +16,7 @@ class Pasien extends BaseController
 
     public function daftar_pasien()
     {
-        $pasien = $this->modelPasien->getPasien()->findAll();
+        $pasien = $this->modelPasien->getPasien()->orderBy('nama', 'asc')->findAll();
 
         $data = [
             'title' => 'Manajemen Pasien',

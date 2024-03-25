@@ -8,11 +8,11 @@ class ModelRelasi extends Model
 {
     protected $table            = 'relasi_gp';
     protected $primaryKey       = 'id';
-    protected $allowedFields    = ['pyk_id', 'gjl_id'];
+    protected $allowedFields    = ['pyk_id', 'gjl_id', 'bobot_id'];
 
     public function getRelasi()
     {
-        $query = $this->table('relasi_gp')->select('id, pyk_id, gjl_id');
+        $query = $this->table('relasi_gp')->select('id, pyk_id, gjl_id, bobot_id');
 
         return $query;
     }

@@ -25,18 +25,15 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <a href="<?= base_url('tambah_penyakit') ?>" class="btn btn-block btn-outline-primary btn-sm d-inline" style="width: auto; max-width: 100px;"><span><i class="fas fa-plus"></i> Tambah</span></a>
-                            <a href="<?= base_url('hapus_semua_penyakit') ?>" class="btn btn-block btn-outline-danger btn-sm d-inline" style="width: auto; max-width: 100px;" onclick="return confirm('apakah anda yakin menghapus semua data?')"><span><i class="fas fa-trash"></i> Hapus</span></a>
+                            <a href="<?= base_url('tambah_bobot') ?>" class="btn btn-block btn-outline-primary" style="width: auto; max-width: 100px;"><span><i class="fas fa-plus"></i> Tambah</span></a>
                         </div>
                         <div class="card-body">
                             <table id="example2" class="table table-bordered table-hover">
                                 <thead>
                                     <tr>
                                         <th>No.</th>
-                                        <th>Kode</th>
-                                        <th>Nama</th>
-                                        <th>Deskripsi</th>
-                                        <th>Perawatan</th>
+                                        <th>Parameter</th>
+                                        <th>Nilai Bobot</th>
                                         <th style="text-align: center;">Aksi</th>
                                     </tr>
                                 </thead>
@@ -45,23 +42,11 @@
                                     <?php foreach ($data as $dt) : ?>
                                         <tr>
                                             <td><?= $i++ ?></td>
-                                            <td><?= $dt['kode'] ?></td>
-                                            <td><?= $dt['nama'] ?></td>
-                                            <?php
-                                            $deskripsi = explode(" ", $dt['deskripsi']);
-                                            $des = array_slice($deskripsi, 0, 7);
-                                            $shortDescription = implode(" ", $des);
-
-                                            $perawatan = explode(" ", $dt['perawatan']);
-                                            $per = array_slice($perawatan, 0, 7);
-                                            $shortPer = implode(" ", $per);
-                                            ?>
-                                            <td style="width: auto; max-width: 400px;"><?= $shortDescription . '...' ?></td>
-                                            <td style="width: auto; max-width: 400px;"><?= $shortPer . '...' ?></td>
+                                            <td><?= $dt['parameter'] ?></td>
+                                            <td><?= $dt['nilai'] ?></td>
                                             <td style="text-align: center;">
-                                                <a type="button" href="<?= base_url('lihat_penyakit/' . $dt['id']); ?>" class="btn btn-block btn-outline-info btn-sm d-inline" style="width: auto; max-width: 100;"><span><i class="fas fa-eye"></i> Lihat</span></a>
-                                                <a type="button" href="<?= base_url('edit_penyakit/' . $dt['id']); ?>" class="btn btn-block btn-outline-warning btn-sm d-inline" style="width: auto; max-width: 100;"><span><i class="fas fa-edit"></i> Edit</span></a>
-                                                <form action="<?= base_url('hapus_penyakit/' . $dt['id']); ?>" method="post" class="d-inline">
+                                                <a type="button" href="<?= base_url('edit_bobot/' . $dt['id']); ?>" class="btn btn-block btn-outline-warning btn-sm d-inline" style="width: auto; max-width: 100;"><span><i class="fas fa-edit"></i> Edit</span></a>
+                                                <form action="<?= base_url('hapus_bobot/' . $dt['id']); ?>" method="post" class="d-inline">
                                                     <?= csrf_field(); ?>
                                                     <input type="hidden" name="_method" value="DELETE">
                                                     <button type="submit" class="btn btn-block btn-outline-danger btn-sm d-inline" onclick="return confirm('apakah anda yakin')" style="width: auto; max-width: 100;"><span><i class="fas fa-trash-alt"></i> Hapus</span></button>
@@ -73,10 +58,8 @@
                                 <tfoot>
                                     <tr>
                                         <th>No.</th>
-                                        <th>Kode</th>
-                                        <th>Nama</th>
-                                        <th>Deskripsi</th>
-                                        <th>Perawatan</th>
+                                        <th>Parameter</th>
+                                        <th>Nilai Bobot</th>
                                         <th style="text-align: center;">Aksi</th>
                                     </tr>
                                 </tfoot>

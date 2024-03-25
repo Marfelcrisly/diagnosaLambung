@@ -33,7 +33,7 @@
                                     <option value="100" <?= (old('page', $page) == '100') ? 'selected disabled' : ''; ?>>100</option>
                                 </select>
                             </div>
-                            <a href="<?= base_url('tambah_relasi') ?>" class="btn btn-outline-primary btn-sm ml-2" style="width: auto; max-width: 100px;"><span><i class="fas fa-plus"></i> Tambah</span></a>
+                            <a href="<?= base_url('tambah_diagnosa') ?>" class="btn btn-outline-primary btn-sm ml-2" style="width: auto; max-width: 100px;"><span><i class="fas fa-plus"></i> Tambah</span></a>
                             <a href="<?= base_url('hapus_semua_relasi') ?>" class="btn btn-outline-danger btn-sm ml-2" style="width: auto; max-width: 100px;" onclick="return confirm('apakah anda yakin menghapus semua data?')"><span><i class="fas fa-trash"></i> Hapus</span></a>
                         </div>
 
@@ -43,13 +43,14 @@
                                     text-align: center;
                                 }
                             </style>
-                            <table id="example2" class="table table-bordered table-hover center">
+                            <table id="example2" class="table table-bordered table-hover">
                                 <thead>
                                     <tr>
                                         <th>No.</th>
-                                        <th>Kode Penyakit</th>
-                                        <th>Kode Gejala</th>
-                                        <th>Bobot</th>
+                                        <th>Nama Pasien</th>
+                                        <th>Penyakit Pasien</th>
+                                        <th>Kesamaan</th>
+                                        <th>Tanggal Diagnosa</th>
                                         <th style="text-align: center;">Aksi</th>
                                     </tr>
                                 </thead>
@@ -58,9 +59,10 @@
                                     <?php foreach ($data as $dt) : ?>
                                         <tr>
                                             <td><?= $i++ ?></td>
-                                            <td><?= $dt['kodeP'] ?></td>
-                                            <td><?= $dt['kodeG'] ?></td>
-                                            <td><?= $dt['nilai'] ?></td>
+                                            <td><?= $dt['nama_pasien'] ?></td>
+                                            <td><?= $dt['nama_penyakit'] ?></td>
+                                            <td><?= $dt['kesamaan'] ?></td>
+                                            <td><?= $dt['tanggal'] ?></td>
                                             <td style="text-align: center;">
                                                 <a type="button" href="<?= base_url('edit_relasi/' . $dt['id']); ?>" class="btn btn-block btn-outline-warning btn-sm d-inline" style="width: auto; max-width: 100;"><span><i class="fas fa-edit"></i> Edit</span></a>
                                                 <form action="<?= base_url('hapus_relasi/' . $dt['id']); ?>" method="post" class="d-inline">
@@ -74,7 +76,7 @@
                                 </tbody>
                             </table>
                             <div class="text-center d-flex justify-content-center mt-2">
-                                <?= $pager->links('relasi_gp', 'paginations') ?>
+                                <?= $pager->links('diagnosa', 'paginations') ?>
                             </div>
                         </div>
                     </div>

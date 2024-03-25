@@ -3,23 +3,23 @@
 namespace App\Controllers;
 
 use App\Models\ModelPenyakit;
+use App\Models\ModelRelasi;
 
 class Penyakit extends BaseController
 {
 
-    protected $modelPenyakit;
-
-
+    protected $modelPenyakit, $modelRelasi;
 
     public function __construct()
     {
         $this->modelPenyakit = new ModelPenyakit();
+        $this->modelRelasi = new ModelRelasi();
     }
 
 
     public function daftar_penyakit()
     {
-        $penyakit = $this->modelPenyakit->getPenyakit()->findAll();
+        $penyakit = $this->modelPenyakit->getPenyakit()->orderBy('kode', 'asc')->findAll();
 
         $data = [
             'title' => 'Manajemen Penyakit',
@@ -31,8 +31,17 @@ class Penyakit extends BaseController
 
     public function tambah_penyakit()
     {
+        $id = $this->modelPenyakit->getPenyakit()->orderBy('id', 'desc')->first();
+
+        if (!empty($id['id'])) {
+            $kode = sprintf("P%02d", $id['id'] + 1);
+        } else {
+            $kode = 'P01';
+        }
+
         $data = [
             'title' => 'Form Tambah Penyakit',
+            'kode'  => $kode
         ];
 
         return view('penyakit/tambah_penyakit', $data);
@@ -166,11 +175,24 @@ class Penyakit extends BaseController
     {
         $penyakit = $this->modelPenyakit->getPenyakit()->find($id);
 
+        $gejala = $this->modelRelasi->select('data_gejala.nama as namaG')
+            ->join('data_penyakit', 'data_penyakit.id = relasi_gp.pyk_id')
+            ->join('data_gejala', 'data_gejala.id = relasi_gp.gjl_id')
+            ->where('pyk_id', $id)->find();
+
         $data = [
             'title' => $penyakit['nama'],
-            'data' => $penyakit
+            'data' => $penyakit,
+            'gejala' => $gejala
         ];
 
         return view('penyakit/lihat_penyakit', $data);
+    }
+
+    public function hapus_semua_penyakit()
+    {
+        $this->modelPenyakit->truncate();
+        session()->setFlashdata('pesan', 'Semua Data berhasil dihapus');
+        return redirect()->to('daftar_penyakit');
     }
 }

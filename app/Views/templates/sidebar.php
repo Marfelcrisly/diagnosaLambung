@@ -14,18 +14,20 @@
 
                 <?php
                 $modelMenu = new \App\Models\ModelMenu();
-                $query = $modelMenu->getMenu()->findAll();
+                $query = $modelMenu->getMenu()->orderBy('name', 'asc')->findAll();
                 ?>
 
                 <?php foreach ($query as $data) : ?>
-                    <li class="nav-item">
-                        <a href="<?= base_url($data['url']) ?> " class="nav-link <?= ($data['name'] === $title) ? 'active' : ''; ?>">
-                            <i class="nav-icon <?= $data['icon']; ?>"></i>
-                            <p>
-                                <?= $data['name']; ?>
-                            </p>
-                        </a>
-                    </li>
+                    <?php if ($data['status'] == 1) : ?>
+                        <li class="nav-item">
+                            <a href="<?= base_url($data['url']) ?> " class="nav-link <?= ($data['name'] === $title) ? 'active' : ''; ?>">
+                                <i class="nav-icon <?= $data['icon']; ?>"></i>
+                                <p>
+                                    <?= $data['name']; ?>
+                                </p>
+                            </a>
+                        </li>
+                    <?php endif; ?>
                 <?php endforeach; ?>
 
             </ul>

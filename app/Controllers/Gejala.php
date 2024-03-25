@@ -16,14 +16,21 @@ class Gejala extends BaseController
         $this->modelGejala = new ModelGejala();
     }
 
-
     public function daftar_gejala()
     {
-        $gejala = $this->modelGejala->getGejala()->findAll();
+        $keyword = $this->request->getVar('keyword');
+        $gejala = $this->modelGejala->getGejala()->orderBy('kode', 'asc');
+
+        if ($keyword) {
+            $gejala = $gejala->like('nama', $keyword);
+        }
+
+        $gejala = $gejala->findAll();
 
         $data = [
             'title' => 'Manajemen Gejala',
-            'data'  => $gejala
+            'data'  => $gejala,
+            'keyword' => $keyword
         ];
 
         return view('gejala/daftar_gejala', $data);
@@ -31,8 +38,17 @@ class Gejala extends BaseController
 
     public function tambah_gejala()
     {
+        $id = $this->modelGejala->getGejala()->orderBy('id', 'desc')->first();
+
+        if (!empty($id['id'])) {
+            $kode = sprintf("G%02d", $id['id'] + 1);
+        } else {
+            $kode = 'G01';
+        }
+
         $data = [
             'title' => 'Form Tambah Gejala',
+            'kode'  => $kode
         ];
 
         return view('gejala/tambah_gejala', $data);
@@ -118,7 +134,7 @@ class Gejala extends BaseController
                 ]
             ],
         ];
-        
+
         if (!$this->validate($rules)) {
             return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
         }
@@ -143,6 +159,13 @@ class Gejala extends BaseController
     {
         $this->modelGejala->where('id', $id)->delete();
         session()->setFlashdata('pesan', 'Data berhasil dihapus');
+        return redirect()->to('daftar_gejala');
+    }
+
+    public function hapus_semua_gejala()
+    {
+        $this->modelGejala->truncate();
+        session()->setFlashdata('pesan', 'Semua Data berhasil dihapus');
         return redirect()->to('daftar_gejala');
     }
 }

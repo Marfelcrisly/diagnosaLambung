@@ -24,9 +24,20 @@
             <div class="row">
                 <div class="col-12">
                     <div class="card">
-                        <div class="card-header">
-                            <a href="<?= base_url('tambah_gejala') ?>" class="btn btn-block btn-outline-primary" style="width: auto; max-width: 100px;"><span><i class="fas fa-plus"></i> Tambah</span></a>
-                        </div>
+                        <form action="" method="post">
+                            <div class="card-header d-flex align-items-center justify-content-start">
+                                <a href="<?= base_url('tambah_gejala') ?>" class="btn btn-outline-primary btn-sm d-inline mr-3" style="width: 10%;"><span><i class="fas fa-plus"></i> Tambah</span></a>
+                                <a href="<?= base_url('hapus_semua_gejala') ?>" class="btn btn-block btn-outline-danger btn-sm d-inline mr-3" style="width: 10%;" onclick="return confirm('apakah anda yakin menghapus semua data?')"><span><i class="fas fa-trash"></i> Hapus</span></a>
+                                <div class="input-group input-group-sm">
+                                    <input type="text" class="form-control" placeholder="Keyword pencarian.." name="keyword" value="<?= old('keyword', $keyword); ?>">
+                                    <div class="input-group-append">
+                                        <button type="submit" class="btn btn-default">
+                                            <i class="fas fa-search"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
                         <div class="card-body">
                             <table id="example2" class="table table-bordered table-hover">
                                 <thead>

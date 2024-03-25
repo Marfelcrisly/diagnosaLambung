@@ -53,6 +53,18 @@
                                         <?= session('errors.gjl_id') ?>
                                     </div>
                                 </div>
+                                <div class="form-group">
+                                    <label for="">Bobot</label>
+                                    <select name="bobot_id" class="form-control custom-select <?php if (session('errors.bobot_id')) : ?>is-invalid<?php endif  ?>">
+                                        <option selected disabled>--Pilih--</option>
+                                        <?php foreach ($nilaiBobot as $bobot) : ?>
+                                            <option value="<?= $bobot['id']; ?>" <?= (old('bobot_id') == $bobot['id']) ? 'selected' : ''; ?>><?= $bobot['nilai'] ?></option>
+                                        <?php endforeach; ?>
+                                    </select>
+                                    <div class="invalid-feedback">
+                                        <?= session('errors.bobot_id') ?>
+                                    </div>
+                                </div>
                             </div>
                             <div class="card-footer">
                                 <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Simpan</button>

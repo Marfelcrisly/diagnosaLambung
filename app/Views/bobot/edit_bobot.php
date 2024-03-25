@@ -18,30 +18,23 @@
                 <div class="col-md-6">
                     <div class="card card-primary">
                         <div class="card-header">
-                            <h3 class="card-title">Data Gejala</h3>
+                            <h3 class="card-title">Data Bobot</h3>
                         </div>
-                        <form action="<?= base_url('simpan_gejala'); ?>" method="post">
+                        <form action="<?= base_url('perbarui_bobot/' . $data['id']); ?>" method="post">
                             <?= csrf_field() ?>
                             <div class="card-body">
                                 <div class="form-group">
-                                    <label for="">Kode</label>
-                                    <input type="text" class="form-control <?php if (session('errors.kode')) : ?>is-invalid<?php endif ?>" id="" placeholder="Enter Kode Gejala" name="kode" value="<?= old('kode', $kode); ?>" readonly>
+                                    <label for="">Parameter</label>
+                                    <input type="text" class="form-control <?php if (session('errors.parameter')) : ?>is-invalid<?php endif ?>" id="" placeholder="Enter Nama Parameter" name="parameter" value="<?= old('parameter', $data['parameter']); ?>">
                                     <div class="invalid-feedback">
-                                        <?= session('errors.kode') ?>
+                                        <?= session('errors.parameter') ?>
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="">Nama</label>
-                                    <input type="text" class="form-control <?php if (session('errors.nama')) : ?>is-invalid<?php endif ?>" id="" placeholder="Enter Nama Gejala" name="nama" value="<?= old('nama'); ?>">
+                                    <label for="">Nilai</label>
+                                    <input type="number" class="form-control <?php if (session('errors.nilai')) : ?>is-invalid<?php endif ?>" id="" placeholder="Enter Nilai" name="nilai" value="<?= old('nilai', $data['nilai']); ?>">
                                     <div class="invalid-feedback">
-                                        <?= session('errors.nama') ?>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="">Deskripsi</label>
-                                    <input type="text" class="form-control <?php if (session('errors.deskripsi')) : ?>is-invalid<?php endif ?>" id="" placeholder="Enter Deskripsi" name="deskripsi" value="<?= old('deskripsi'); ?>">
-                                    <div class="invalid-feedback">
-                                        <?= session('errors.deskripsi') ?>
+                                        <?= session('errors.nilai') ?>
                                     </div>
                                 </div>
                             </div>

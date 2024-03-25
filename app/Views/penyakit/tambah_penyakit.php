@@ -25,7 +25,7 @@
                             <div class="card-body">
                                 <div class="form-group">
                                     <label for="">Kode</label>
-                                    <input type="text" class="form-control <?php if (session('errors.kode')) : ?>is-invalid<?php endif ?>" id="" placeholder="Enter Kode Gejala" name="kode" value="<?= old('kode'); ?>">
+                                    <input type="text" class="form-control <?php if (session('errors.kode')) : ?>is-invalid<?php endif ?>" id="" placeholder="Enter Kode Gejala" name="kode" value="<?= old('kode', $kode); ?>" readonly>
                                     <div class="invalid-feedback">
                                         <?= session('errors.kode') ?>
                                     </div>

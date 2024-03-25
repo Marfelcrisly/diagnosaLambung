@@ -25,7 +25,7 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <a href="<?= base_url('tambah_menu') ?>" class="btn btn-block btn-outline-primary" style="width: auto; max-width: 100px;"><span><i class="fas fa-plus"></i> Tambah</span></a>
+                            <a href="<?= base_url('tambah_menu') ?>" class="btn btn-block btn-outline-primary btn-sm" style="width: auto; max-width: 100px;"><span><i class="fas fa-plus"></i> Tambah</span></a>
                         </div>
                         <div class="card-body">
                             <table id="example2" class="table table-bordered table-hover">
@@ -35,6 +35,7 @@
                                         <th>Nama</th>
                                         <th>Url</th>
                                         <th>Icon</th>
+                                        <th>Status</th>
                                         <th style="text-align: center;">Aksi</th>
                                     </tr>
                                 </thead>
@@ -46,6 +47,15 @@
                                             <td><?= $dt['name'] ?></td>
                                             <td><?= $dt['url'] ?></td>
                                             <td><?= $dt['icon'] ?></td>
+                                            <td>
+                                                <form id="form<?= $dt['id']; ?>" action="<?= base_url('status/' . $dt['id']); ?>" method="post">
+                                                    <?= csrf_field(); ?>
+                                                    <div class="form-check">
+                                                        <input type="checkbox" name="status" class="form-check-input active-switch" id="statusSwitch<?= $dt['id']; ?>" data-id="<?= $dt['id']; ?>" <?= ($dt['status'] == '1') ? 'checked' : ''; ?> <?= ($dt['name'] === 'Manajemen Menu') ? 'disabled' : ''; ?>>
+                                                        <label class="form-check-label" for="statusSwitch<?= $dt['id']; ?>"></label>
+                                                    </div>
+                                                </form>
+                                            </td>
                                             <td style="text-align: center;">
                                                 <a type="button" href="<?= base_url('edit_menu/' . $dt['id']); ?>" class="btn btn-block btn-outline-warning btn-sm d-inline" style="width: auto; max-width: 100;"><span><i class="fas fa-edit"></i> Edit</span></a>
                                                 <?php if ($dt['name'] !== 'Manajemen Menu') : ?>
@@ -75,5 +85,18 @@
             </div>
     </section>
 </div>
+
+<script>
+    document.querySelectorAll('.active-switch').forEach(activeSwitch => {
+        activeSwitch.addEventListener('change', function() {
+            const formId = `form${this.getAttribute('data-id')}`;
+            const form = document.getElementById(formId);
+            this.value = this.checked ? '1' : '0';
+            if (form) {
+                form.submit();
+            }
+        });
+    });
+</script>
 
 <?= $this->endSection(); ?>

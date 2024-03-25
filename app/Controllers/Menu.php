@@ -19,7 +19,7 @@ class Menu extends BaseController
 
     public function daftar_menu()
     {
-        $menu = $this->modelMenu->getMenu()->findAll();
+        $menu = $this->modelMenu->getMenu()->orderBy('name', 'asc')->findAll();
 
         $data = [
             'title' => 'Manajemen Menu',
@@ -143,6 +143,19 @@ class Menu extends BaseController
     {
         $this->modelMenu->where('id', $id)->delete();
         session()->setFlashdata('pesan', 'Data berhasil dihapus');
+        return redirect()->to('daftar_menu');
+    }
+
+    public function status($id)
+    {
+        $status = $this->request->getVar('status');
+
+        $data = [
+            'id' => $id,
+            'status' => $status
+        ];
+
+        $this->modelMenu->save($data);
         return redirect()->to('daftar_menu');
     }
 }
