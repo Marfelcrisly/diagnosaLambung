@@ -14,7 +14,7 @@
 
                 <?php
                 $modelMenu = new \App\Models\ModelMenu();
-                $query = $modelMenu->getMenu()->orderBy('name', 'asc')->findAll();
+                $query = $modelMenu->getMenu()->findAll();
                 ?>
 
                 <?php foreach ($query as $data) : ?>

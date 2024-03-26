@@ -34,7 +34,6 @@
                                 </select>
                             </div>
                             <a href="<?= base_url('tambah_diagnosa') ?>" class="btn btn-outline-primary btn-sm ml-2" style="width: auto; max-width: 100px;"><span><i class="fas fa-plus"></i> Tambah</span></a>
-                            <a href="<?= base_url('hapus_semua_relasi') ?>" class="btn btn-outline-danger btn-sm ml-2" style="width: auto; max-width: 100px;" onclick="return confirm('apakah anda yakin menghapus semua data?')"><span><i class="fas fa-trash"></i> Hapus</span></a>
                         </div>
 
                         <div class="card-body">
@@ -64,8 +63,8 @@
                                             <td><?= $dt['kesamaan'] ?></td>
                                             <td><?= $dt['tanggal'] ?></td>
                                             <td style="text-align: center;">
-                                                <a type="button" href="<?= base_url('edit_relasi/' . $dt['id']); ?>" class="btn btn-block btn-outline-warning btn-sm d-inline" style="width: auto; max-width: 100;"><span><i class="fas fa-edit"></i> Edit</span></a>
-                                                <form action="<?= base_url('hapus_relasi/' . $dt['id']); ?>" method="post" class="d-inline">
+                                                <a type="button" href="<?= base_url('edit_relasi/' . $dt['id']); ?>" class="btn btn-block btn-outline-info btn-sm d-inline" style="width: auto; max-width: 100;"><span><i class="fas fa-eye"></i> Lihat</span></a>
+                                                <form action="<?= base_url('hapus_diagnosa/' . $dt['id']); ?>" method="post" class="d-inline">
                                                     <?= csrf_field(); ?>
                                                     <input type="hidden" name="_method" value="DELETE">
                                                     <button type="submit" class="btn btn-block btn-outline-danger btn-sm d-inline" onclick="return confirm('apakah anda yakin')" style="width: auto; max-width: 100;"><span><i class="fas fa-trash-alt"></i> Hapus</span></button>

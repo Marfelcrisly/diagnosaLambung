@@ -35,7 +35,7 @@
                                         <select name="pasien_id" class="form-control custom-select <?php if (session('errors.pasien_id')) : ?>is-invalid<?php endif  ?>">
                                             <option selected disabled>--Pilih--</option>
                                             <?php foreach ($namaPasien as $nama) : ?>
-                                                <option value="<?= $nama['id']; ?>" <?= (old('pasien_id') == $nama['id']) ? 'selected' : ''; ?>><?= $nama['nama']; ?></option>
+                                                <option value="<?= $nama['id']; ?>" <?= (old('pasien_id') == $nama['id']) ? 'selected' : ''; ?>><?= $nama['name']; ?></option>
                                             <?php endforeach; ?>
                                         </select>
                                         <div class="invalid-feedback">

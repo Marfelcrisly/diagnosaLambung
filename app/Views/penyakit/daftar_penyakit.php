@@ -70,16 +70,6 @@
                                         </tr>
                                     <?php endforeach; ?>
                                 </tbody>
-                                <tfoot>
-                                    <tr>
-                                        <th>No.</th>
-                                        <th>Kode</th>
-                                        <th>Nama</th>
-                                        <th>Deskripsi</th>
-                                        <th>Perawatan</th>
-                                        <th style="text-align: center;">Aksi</th>
-                                    </tr>
-                                </tfoot>
                             </table>
                         </div>
                     </div>

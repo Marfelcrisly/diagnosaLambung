@@ -2,7 +2,7 @@
 
 namespace App\Controllers;
 
-use App\Models\ModelPasien;
+use App\Models\ModelUsers;
 
 class Pasien extends BaseController
 {
@@ -11,12 +11,16 @@ class Pasien extends BaseController
 
     public function __construct()
     {
-        $this->modelPasien = new ModelPasien();
+        $this->modelPasien = new ModelUsers();
     }
 
     public function daftar_pasien()
     {
-        $pasien = $this->modelPasien->getPasien()->orderBy('nama', 'asc')->findAll();
+        $pasien = $this->modelPasien->select('users.id, username, no_rm, users.name, jk, umur')
+            ->join('auth_groups_users', 'auth_groups_users.user_id = users.id')
+            ->join('auth_groups', 'auth_groups.id = auth_groups_users.group_id')
+            ->where('auth_groups.name', 'pasien')
+            ->findAll();
 
         $data = [
             'title' => 'Manajemen Pasien',
@@ -26,72 +30,20 @@ class Pasien extends BaseController
         return view('pasien/daftar_pasien', $data);
     }
 
-    public function tambah_pasien()
-    {
-        $data = [
-            'title' => 'Form Tambah Pasien',
-        ];
-
-        return view('pasien/tambah_pasien', $data);
-    }
-
-    public function simpan_pasien()
-    {
-        $rules = [
-            'no_rm' => [
-                'rules' => 'required|is_unique[data_pasien.no_rm]',
-                'errors' => [
-                    'required' => 'No. RM harus diisi',
-                    'is_unique' => 'No. RM sudah ada'
-                ]
-            ],
-            'nama' => [
-                'rules' => 'required',
-                'errors' => [
-                    'required' => 'Nama lengkap harus diisi',
-                ]
-            ],
-            'jk' => [
-                'rules' => 'required',
-                'errors' => [
-                    'required' => 'Jenis Kelamin harus dipilih',
-                ]
-            ],
-            'umur' => [
-                'rules' => 'required',
-                'errors' => [
-                    'required' => 'Umur harus diisi',
-                ]
-            ],
-        ];
-
-        if (!$this->validate($rules)) {
-            return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
-        }
-
-        $no_rm = $this->request->getVar('no_rm');
-        $nama = $this->request->getVar('nama');
-        $jk = $this->request->getVar('jk');
-        $umur = $this->request->getVar('umur');
-
-        $data = [
-            'no_rm' => $no_rm,
-            'nama' => $nama,
-            'jk' => $jk,
-            'umur' => $umur,
-        ];
-
-        $this->modelPasien->save($data);
-        session()->setFlashdata('pesan', 'Data berhasil ditambah.');
-        return redirect()->to('daftar_pasien');
-    }
-
     public function edit_pasien($id)
     {
-        $pasien = $this->modelPasien->getPasien()->find($id);
+        $pasien = $this->modelPasien->select('users.id, username, no_rm, users.name as nama, jk, umur')
+            ->join('auth_groups_users', 'auth_groups_users.user_id = users.id')
+            ->join('auth_groups', 'auth_groups.id = auth_groups_users.group_id')
+            ->where('auth_groups.name', 'pasien')
+            ->find($id);
+
+        $no_rm = sprintf("PA%02d", $id - 1);
+
         $data = [
             'title' => 'Form Edit Pasien',
-            'pasien' => $pasien
+            'pasien' => $pasien,
+            'no_rm' => $no_rm
         ];
 
         return view('pasien/edit_pasien', $data);
@@ -101,7 +53,7 @@ class Pasien extends BaseController
     {
         $rules = [
             'no_rm' => [
-                'rules' => 'required|is_unique[data_pasien.no_rm,id,' . $id . ']',
+                'rules' => 'required|is_unique[users.no_rm,id,' . $id . ']',
                 'errors' => [
                     'required' => 'No. RM harus diisi',
                     'is_unique' => 'No. RM sudah ada'
@@ -139,7 +91,7 @@ class Pasien extends BaseController
         $data = [
             'id' => $id,
             'no_rm' => $no_rm,
-            'nama' => $nama,
+            'name' => $nama,
             'jk' => $jk,
             'umur' => $umur,
         ];

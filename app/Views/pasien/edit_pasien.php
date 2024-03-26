@@ -25,7 +25,7 @@
                             <div class="card-body">
                                 <div class="form-group">
                                     <label for="">No.RM</label>
-                                    <input type="text" class="form-control <?php if (session('errors.no_rm')) : ?>is-invalid<?php endif ?>" id="" placeholder="" name="no_rm" value="<?= old('no_rm', $pasien['no_rm']); ?>">
+                                    <input type="text" class="form-control <?php if (session('errors.no_rm')) : ?>is-invalid<?php endif ?>" id="" placeholder="" name="no_rm" value="<?= old('no_rm', $no_rm); ?>" readonly>
                                     <div class="invalid-feedback">
                                         <?= session('errors.no_rm') ?>
                                     </div>

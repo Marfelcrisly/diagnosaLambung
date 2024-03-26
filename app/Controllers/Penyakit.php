@@ -76,6 +76,14 @@ class Penyakit extends BaseController
                     'required' => 'Perawatan harus diisi',
                 ]
             ],
+            'img' => [
+                'rules' => 'max_size[img,3000]|is_image[img]|mime_in[img,image/jpg,image/jpeg,image/png]',
+                'errors' => [
+                    'is_image' => 'File yang dipilih bukan gambar.',
+                    'max_size' => 'Ukuran gambar terlalu besar. Maksimum 3MB.',
+                    'mime_in'  => 'Tipe file yang dipilih bukan jpg, jpeg, atau png.',
+                ],
+            ],
         ];
 
         if (!$this->validate($rules)) {
@@ -87,11 +95,21 @@ class Penyakit extends BaseController
         $deskripsi = $this->request->getVar('deskripsi');
         $perawatan = $this->request->getVar('perawatan');
 
+        $fileImage = $this->request->getFile('img');
+
+        if ($fileImage->getError() == 4) {
+            $namaImage = 'default.jpg';
+        } else {
+            $namaImage = $fileImage->getName();
+            $fileImage->move('img', $namaImage);
+        }
+
         $data = [
             'kode' => $kode,
             'nama' => $nama,
             'deskripsi' => $deskripsi,
             'perawatan' => $perawatan,
+            'img' => $namaImage
         ];
 
         $this->modelPenyakit->save($data);
@@ -140,6 +158,14 @@ class Penyakit extends BaseController
                     'required' => 'Perawatan harus diisi',
                 ]
             ],
+            'img' => [
+                'rules' => 'max_size[img,3000]|is_image[img]|mime_in[img,image/jpg,image/jpeg,image/png]',
+                'errors' => [
+                    'is_image' => 'File yang dipilih bukan gambar.',
+                    'max_size' => 'Ukuran gambar terlalu besar. Maksimum 3MB.',
+                    'mime_in'  => 'Tipe file yang dipilih bukan jpg, jpeg, atau png.',
+                ],
+            ],
         ];
 
         if (!$this->validate($rules)) {
@@ -151,12 +177,26 @@ class Penyakit extends BaseController
         $deskripsi = $this->request->getVar('deskripsi');
         $perawatan = $this->request->getVar('perawatan');
 
+        $fileImage = $this->request->getFile('img');
+        $imageLama = $this->request->getVar('gambarLama');
+
+        if ($fileImage->getError() == 4) {
+            $namaImage = $imageLama;
+        } else {
+            $namaImage = $fileImage->getName();
+            $fileImage->move('img', $namaImage);
+            if ($imageLama !== 'default.jpg') {
+                unlink('img/' . $imageLama);
+            }
+        }
+
         $data = [
             'id' => $id,
             'kode' => $kode,
             'nama' => $nama,
             'deskripsi' => $deskripsi,
             'perawatan' => $perawatan,
+            'img' => $namaImage,
         ];
 
         $this->modelPenyakit->save($data);
@@ -166,6 +206,11 @@ class Penyakit extends BaseController
 
     public function hapus_penyakit($id)
     {
+        $gambar = $this->modelPenyakit->find($id)['img'];
+        if ($gambar !== 'default.jpg') {
+            unlink('img/' . $gambar);
+        }
+
         $this->modelPenyakit->where('id', $id)->delete();
         session()->setFlashdata('pesan', 'Data berhasil dihapus');
         return redirect()->to('daftar_penyakit');
@@ -191,6 +236,13 @@ class Penyakit extends BaseController
 
     public function hapus_semua_penyakit()
     {
+        $files = glob(ROOTPATH . 'public/img/*');
+
+        foreach ($files as $file) {
+            if (is_file($file) && basename($file) !== 'default.jpg') {
+                unlink($file);
+            }
+        }
         $this->modelPenyakit->truncate();
         session()->setFlashdata('pesan', 'Semua Data berhasil dihapus');
         return redirect()->to('daftar_penyakit');

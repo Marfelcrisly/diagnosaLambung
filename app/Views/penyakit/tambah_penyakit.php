@@ -20,8 +20,9 @@
                         <div class="card-header">
                             <h3 class="card-title">Data Penyakit</h3>
                         </div>
-                        <form action="<?= base_url('simpan_penyakit'); ?>" method="post">
+                        <form action="<?= base_url('simpan_penyakit'); ?>" method="post" enctype="multipart/form-data">
                             <?= csrf_field() ?>
+                            <input type="hidden" name="gambarLama" value="default.jpg">
                             <div class="card-body">
                                 <div class="form-group">
                                     <label for="">Kode</label>
@@ -49,6 +50,17 @@
                                     <textarea class="form-control <?php if (session('errors.perawatan')) : ?>is-invalid<?php endif ?>" id="perawatan" placeholder="Masukkan Perawatan" name="perawatan"><?= old('perawatan'); ?></textarea>
                                     <div class="invalid-feedback">
                                         <?= session('errors.perawatan') ?>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="img">Gambar</label><br>
+                                    <img id="img-preview" src="<?= base_url('img/' . (old('img') ? old('img') : 'default.jpg')); ?>" alt="Preview Gambar" class="profile-user-img img-fluid mb-2" style="width: auto; max-width: 100px;">
+                                    <div class="custom-file">
+                                        <input type="file" id="img" name="img" class="custom-file-input <?php if (session('errors.img')) : ?>is-invalid<?php endif ?>" onchange="previewImg()">
+                                        <label class="custom-file-label" for="img"><?= old('img') ? old('img') : 'default.jpg'; ?></label>
+                                        <div class="invalid-feedback">
+                                            <?= session('errors.img'); ?>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

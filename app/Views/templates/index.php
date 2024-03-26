@@ -53,6 +53,25 @@
     <script src="<?= base_url(); ?>dist/js/adminlte.js"></script>
     <script src="<?= base_url(); ?>dist/js/demo.js"></script>
     <script src="<?= base_url(); ?>dist/js/pages/dashboard.js"></script>
+
+    <script>
+        function previewImg() {
+            const image = document.querySelector('#img');
+            const label = document.querySelector('.custom-file-label');
+            const imgPreview = document.querySelector('#img-preview');
+
+            label.textContent = image.files[0].name;
+
+            const fileImage = new FileReader();
+            fileImage.readAsDataURL(image.files[0]);
+
+            fileImage.onload = function(e) {
+                imgPreview.src = e.target.result;
+                // imgPreview.style.display = 'block';
+            }
+        }
+    </script>
+
 </body>
 
 </html>

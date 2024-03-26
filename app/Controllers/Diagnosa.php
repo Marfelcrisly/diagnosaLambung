@@ -3,7 +3,7 @@
 namespace App\Controllers;
 
 use App\Models\ModelDiagnosa;
-use App\Models\ModelPasien;
+use App\Models\ModelUsers;
 use App\Models\ModelGejala;
 use App\Models\ModelPenyakit;
 use App\Models\ModelRelasi;
@@ -12,12 +12,10 @@ class Diagnosa extends BaseController
 {
     protected $modelDiagnosa, $modelPasien, $modelGejala, $modelPenyakit, $modelRelasi;
 
-
-
     public function __construct()
     {
         $this->modelDiagnosa = new ModelDiagnosa();
-        $this->modelPasien = new ModelPasien();
+        $this->modelPasien = new ModelUsers();
         $this->modelGejala = new ModelGejala();
         $this->modelPenyakit = new ModelPenyakit();
         $this->modelRelasi = new ModelRelasi();
@@ -27,8 +25,8 @@ class Diagnosa extends BaseController
     {
         $currentPage = $this->request->getVar('page_diagnosa') ? $this->request->getVar('page_diagnosa') : 1;
 
-        $query = $this->modelDiagnosa->select('hasil_diagnosa.id, data_pasien.nama as nama_pasien, data_penyakit.nama as nama_penyakit, kesamaan, tanggal')
-            ->join('data_pasien', 'data_pasien.id = hasil_diagnosa.pasien_id', 'left')
+        $query = $this->modelDiagnosa->select('hasil_diagnosa.id, users.name as nama_pasien, data_penyakit.nama as nama_penyakit, kesamaan, tanggal')
+            ->join('users', 'users.id = hasil_diagnosa.pasien_id', 'left')
             ->join('data_penyakit', 'data_penyakit.id = hasil_diagnosa.penyakit_id', 'left');
 
         $page = $this->request->getVar('page') ? $this->request->getVar('page') : 10;
@@ -47,7 +45,11 @@ class Diagnosa extends BaseController
 
     public function tambah_diagnosa()
     {
-        $namaPasien = $this->modelPasien->getPasien()->findAll();
+        $namaPasien = $this->modelPasien->select('users.id, username, no_rm, users.name, jk, umur')
+            ->join('auth_groups_users', 'auth_groups_users.user_id = users.id')
+            ->join('auth_groups', 'auth_groups.id = auth_groups_users.group_id')
+            ->where('auth_groups.name', 'pasien')
+            ->findAll();
         $namaGejala = $this->modelGejala->getGejala()->findAll();
 
         $data = [
@@ -80,7 +82,10 @@ class Diagnosa extends BaseController
             return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
         }
 
+        $pasien_id = $this->request->getVar('pasien_id');
         $gejalaPasien = $this->request->getVar('diagnosa');
+
+        $umurPasien = $this->modelPasien->getUsers()->find($pasien_id)['umur'];
 
         $penyakitSimilarity = [];
 
@@ -107,6 +112,10 @@ class Diagnosa extends BaseController
                 $similarity /= $totalBobot;
             }
 
+            if ($umurPasien > 60) {
+                $similarity -= 0.1;
+            }
+
             $penyakitSimilarity[] = [
                 'penyakit_id' => $penyakit['id'],
                 'nama' => $penyakit['nama'],
@@ -121,7 +130,7 @@ class Diagnosa extends BaseController
         $diagnosa = $penyakitSimilarity[0];
 
         $dataDiagnosa = [
-            'pasien_id' => $this->request->getVar('pasien_id'),
+            'pasien_id' => $pasien_id,
             'penyakit_id' => $diagnosa['penyakit_id'],
             'kesamaan' => $diagnosa['similarity'],
             'tanggal' => $this->request->getVar('tanggal')
@@ -129,6 +138,13 @@ class Diagnosa extends BaseController
 
         $this->modelDiagnosa->save($dataDiagnosa);
         session()->setFlashdata('pesan', 'Data berhasil ditambah.');
+        return redirect()->to('daftar_diagnosa');
+    }
+
+    public function hapus_diagnosa($id)
+    {
+        $this->modelDiagnosa->where('id', $id)->delete();
+        session()->setFlashdata('pesan', 'Data berhasil dihapus');
         return redirect()->to('daftar_diagnosa');
     }
 }
