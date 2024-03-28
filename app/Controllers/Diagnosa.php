@@ -33,7 +33,7 @@ class Diagnosa extends BaseController
         $data = $query->paginate($page, 'diagnosa', $currentPage);
 
         $data = [
-            'title' => 'Manajemen Diagnosa',
+            'title' => 'Data Diagnosa',
             'data'  => $data,
             'pager'      => $this->modelDiagnosa->pager,
             'currentPage' => $currentPage,

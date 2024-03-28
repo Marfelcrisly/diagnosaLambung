@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
     <link rel="stylesheet" href="<?= base_url(); ?>plugins/fontawesome-free/css/all.min.css">
     <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="<?= base_url(); ?>plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
     <link rel="stylesheet" href="<?= base_url(); ?>plugins/icheck-bootstrap/icheck-bootstrap.min.css">
     <link rel="stylesheet" href="<?= base_url(); ?>plugins/jqvmap/jqvmap.min.css">
@@ -51,7 +52,7 @@
     <script src="<?= base_url(); ?>plugins/summernote/summernote-bs4.min.js"></script>
     <script src="<?= base_url(); ?>plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
     <script src="<?= base_url(); ?>dist/js/adminlte.js"></script>
-    <script src="<?= base_url(); ?>dist/js/demo.js"></script>
+    <!-- <script src="<?= base_url(); ?>dist/js/demo.js"></script> -->
     <script src="<?= base_url(); ?>dist/js/pages/dashboard.js"></script>
 
     <script>
@@ -70,6 +71,15 @@
                 // imgPreview.style.display = 'block';
             }
         }
+    </script>
+
+    <script>
+        document.getElementById('checkAll').addEventListener('click', function() {
+            var checkboxes = document.querySelectorAll('input[type="checkbox"]  ');
+            checkboxes.forEach(function(checkbox) {
+                checkbox.checked = !checkbox.checked;
+            });
+        });
     </script>
 
 </body>

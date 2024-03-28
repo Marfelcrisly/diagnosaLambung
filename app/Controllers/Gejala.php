@@ -28,7 +28,7 @@ class Gejala extends BaseController
         $gejala = $gejala->findAll();
 
         $data = [
-            'title' => 'Manajemen Gejala',
+            'title' => 'Data Gejala',
             'data'  => $gejala,
             'keyword' => $keyword
         ];

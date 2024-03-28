@@ -49,12 +49,12 @@
                                             <td><?= $dt['password_hash'] ?></td>
                                             <td><?= $dt['role'] ?></td>
                                             <td style="text-align: center;">
-                                                <a type="button" href="<?= base_url('edit_pengguna/' . $dt['id']); ?>" class="btn btn-block btn-outline-warning btn-sm d-inline" style="width: auto; max-width: 100;"><span><i class="fas fa-edit"></i> Edit</span></a>
+                                                <a type="button" href="<?= base_url('reset_password/' . $dt['id']); ?>" class="btn btn-block btn-outline-secondary btn-sm d-inline" onclick="return confirm('apakah anda yakin reset password?')" style="width: auto; max-width: 100;"><span><i class="fa-solid fa-recycle"></i> </span></a>
                                                 <?php if ($dt['username'] !== user()->username) : ?>
                                                     <form action="<?= base_url('hapus_pengguna/' . $dt['id']); ?>" method="post" class="d-inline">
                                                         <?= csrf_field(); ?>
                                                         <input type="hidden" name="_method" value="DELETE">
-                                                        <button type="submit" class="btn btn-block btn-outline-danger btn-sm d-inline" onclick="return confirm('apakah anda yakin')" style="width: auto; max-width: 100;"><span><i class="fas fa-trash-alt"></i> Hapus</span></button>
+                                                        <button type="submit" class="btn btn-block btn-outline-danger btn-sm d-inline ml-2" onclick="return confirm('apakah anda yakin?')" style="width: auto; max-width: 100;"><span><i class="fas fa-trash-alt"></i> </span></button>
                                                     </form>
                                                 <?php endif; ?>
                                             </td>

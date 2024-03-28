@@ -22,7 +22,7 @@ class Penyakit extends BaseController
         $penyakit = $this->modelPenyakit->getPenyakit()->orderBy('kode', 'asc')->findAll();
 
         $data = [
-            'title' => 'Manajemen Penyakit',
+            'title' => 'Data Penyakit',
             'data'  => $penyakit
         ];
 

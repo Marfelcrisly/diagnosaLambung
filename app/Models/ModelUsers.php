@@ -16,4 +16,13 @@ class ModelUsers extends Model
 
         return $query;
     }
+
+    public function getUsersRole()
+    {
+        $query = $this->table('users')->select('auth_groups.name as role')
+            ->join('auth_groups_users', 'auth_groups_users.user_id = users.id')
+            ->join('auth_groups', 'auth_groups.id = auth_groups_users.group_id');
+
+        return $query;
+    }
 }

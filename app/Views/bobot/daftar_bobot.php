@@ -22,7 +22,7 @@
     <section class="content">
         <div class="container-fluid">
             <div class="row">
-                <div class="col-12">
+                <div class="col-5">
                     <div class="card">
                         <div class="card-header">
                             <a href="<?= base_url('tambah_bobot') ?>" class="btn btn-block btn-outline-primary" style="width: auto; max-width: 100px;"><span><i class="fas fa-plus"></i> Tambah</span></a>
@@ -45,11 +45,11 @@
                                             <td><?= $dt['parameter'] ?></td>
                                             <td><?= $dt['nilai'] ?></td>
                                             <td style="text-align: center;">
-                                                <a type="button" href="<?= base_url('edit_bobot/' . $dt['id']); ?>" class="btn btn-block btn-outline-warning btn-sm d-inline" style="width: auto; max-width: 100;"><span><i class="fas fa-edit"></i> Edit</span></a>
+                                                <a type="button" href="<?= base_url('edit_bobot/' . $dt['id']); ?>" class="btn btn-block btn-outline-warning btn-sm d-inline" style="width: auto; max-width: 100;"><span><i class="fas fa-edit"></i> </span></a>
                                                 <form action="<?= base_url('hapus_bobot/' . $dt['id']); ?>" method="post" class="d-inline">
                                                     <?= csrf_field(); ?>
                                                     <input type="hidden" name="_method" value="DELETE">
-                                                    <button type="submit" class="btn btn-block btn-outline-danger btn-sm d-inline" onclick="return confirm('apakah anda yakin')" style="width: auto; max-width: 100;"><span><i class="fas fa-trash-alt"></i> Hapus</span></button>
+                                                    <button type="submit" class="btn btn-block btn-outline-danger btn-sm d-inline ml-2" onclick="return confirm('apakah anda yakin')" style="width: auto; max-width: 100;"><span><i class="fas fa-trash-alt"></i> </span></button>
                                                 </form>
                                             </td>
                                         </tr>

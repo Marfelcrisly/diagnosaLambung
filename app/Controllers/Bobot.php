@@ -22,7 +22,7 @@ class Bobot extends BaseController
         $bobot = $this->modelBobot->getBobot()->orderBy('nilai', 'desc')->findAll();
 
         $data = [
-            'title' => 'Manajemen Bobot',
+            'title' => 'Data Bobot',
             'data'  => $bobot
         ];
 

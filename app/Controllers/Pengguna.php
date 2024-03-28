@@ -34,7 +34,7 @@ class Pengguna extends BaseController
             ->findAll();
 
         $data = [
-            'title' => 'Manajemen Pengguna',
+            'title' => 'Data Pengguna',
             'data'  => $pengguna
         ];
 
@@ -113,6 +113,25 @@ class Pengguna extends BaseController
     {
         $this->modelUsers->where('id', $id)->delete();
         session()->setFlashdata('pesan', 'Data berhasil dihapus');
+        return redirect()->to('daftar_pengguna');
+    }
+
+    public function reset_password($id)
+    {
+        $user = new User();
+        $password = '12345678';
+
+        $user->setPassword($password);
+
+        $hashedPassword = $user->password_hash;
+
+        $data = [
+            'id' => $id,
+            'password_hash' => $hashedPassword
+        ];
+
+        $this->modelUsers->save($data);
+        session()->setFlashdata('pesan', 'Password berhasil direset.');
         return redirect()->to('daftar_pengguna');
     }
 }

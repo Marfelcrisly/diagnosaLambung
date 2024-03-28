@@ -13,17 +13,20 @@
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
 
                 <?php
-                $modelMenu = new \App\Models\ModelMenu();
-                $query = $modelMenu->getMenu()->findAll();
+                $modelAksesMenu = new \App\Models\ModelAksesMenu();
+                $userRole = new \App\Models\ModelUsers();
+
+                $role = $userRole->getUsersRole()->where('users.id', user()->id)->first()['role'];
+                $query = $modelAksesMenu->getAksesMenu()->where('auth_groups.name', $role)->orderBy('namaMenu', 'asc')->findAll();
                 ?>
 
                 <?php foreach ($query as $data) : ?>
                     <?php if ($data['status'] == 1) : ?>
                         <li class="nav-item">
-                            <a href="<?= base_url($data['url']) ?> " class="nav-link <?= ($data['name'] === $title) ? 'active' : ''; ?>">
+                            <a href="<?= base_url($data['url']) ?> " class="nav-link <?= ($data['namaMenu'] === $title) ? 'active' : ''; ?>">
                                 <i class="nav-icon <?= $data['icon']; ?>"></i>
                                 <p>
-                                    <?= $data['name']; ?>
+                                    <?= $data['namaMenu']; ?>
                                 </p>
                             </a>
                         </li>

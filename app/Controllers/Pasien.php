@@ -23,7 +23,7 @@ class Pasien extends BaseController
             ->findAll();
 
         $data = [
-            'title' => 'Manajemen Pasien',
+            'title' => 'Data Pasien',
             'data'  => $pasien
         ];
 

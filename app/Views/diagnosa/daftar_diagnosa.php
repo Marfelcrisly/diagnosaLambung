@@ -63,11 +63,10 @@
                                             <td><?= $dt['kesamaan'] ?></td>
                                             <td><?= $dt['tanggal'] ?></td>
                                             <td style="text-align: center;">
-                                                <a type="button" href="<?= base_url('edit_relasi/' . $dt['id']); ?>" class="btn btn-block btn-outline-info btn-sm d-inline" style="width: auto; max-width: 100;"><span><i class="fas fa-eye"></i> Lihat</span></a>
                                                 <form action="<?= base_url('hapus_diagnosa/' . $dt['id']); ?>" method="post" class="d-inline">
                                                     <?= csrf_field(); ?>
                                                     <input type="hidden" name="_method" value="DELETE">
-                                                    <button type="submit" class="btn btn-block btn-outline-danger btn-sm d-inline" onclick="return confirm('apakah anda yakin')" style="width: auto; max-width: 100;"><span><i class="fas fa-trash-alt"></i> Hapus</span></button>
+                                                    <button type="submit" class="btn btn-block btn-outline-danger btn-sm d-inline" onclick="return confirm('apakah anda yakin')" style="width: auto; max-width: 100;"><span><i class="fas fa-trash-alt"></i> </span></button>
                                                 </form>
                                             </td>
                                         </tr>

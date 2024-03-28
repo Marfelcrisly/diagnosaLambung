@@ -3,17 +3,21 @@
 namespace App\Controllers;
 
 use App\Models\ModelMenu;
+use App\Models\ModelAksesMenu;
 
 class Menu extends BaseController
 {
 
-    protected $modelMenu;
+    protected $modelMenu, $modelAksesMenu, $db;
 
 
 
     public function __construct()
     {
         $this->modelMenu = new ModelMenu();
+        $this->modelAksesMenu = new ModelAksesMenu();
+
+        $this->db = \Config\Database::connect();
     }
 
 
@@ -21,9 +25,12 @@ class Menu extends BaseController
     {
         $menu = $this->modelMenu->getMenu()->orderBy('name', 'asc')->findAll();
 
+        $role = $this->db->table('auth_groups')->select('*')->get()->getResultArray();
+
         $data = [
-            'title' => 'Manajemen Menu',
-            'data'  => $menu
+            'title' => 'Data Menu',
+            'data'  => $menu,
+            'role'  => $role,
         ];
 
         return view('menu/daftar_menu', $data);

@@ -38,7 +38,7 @@ class Relasi extends BaseController
         $data = $relasi->paginate($page, 'relasi_gp', $currentPage);
 
         $data = [
-            'title' => 'Manajemen Relasi',
+            'title' => 'Relasi Penyakit & Gejala',
             'data'  => $data,
             'pager'      => $this->modelRelasi->pager,
             'currentPage' => $currentPage,
