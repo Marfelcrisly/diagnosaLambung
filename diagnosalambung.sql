@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 25 Mar 2024 pada 11.34
+-- Waktu pembuatan: 03 Apr 2024 pada 06.11
 -- Versi server: 10.4.32-MariaDB
 -- Versi PHP: 8.2.12
 
@@ -53,7 +53,7 @@ CREATE TABLE `auth_groups` (
 
 INSERT INTO `auth_groups` (`id`, `name`, `description`) VALUES
 (1, 'admin', 'Admin'),
-(2, 'user', 'User');
+(2, 'pasien', 'Pasien');
 
 -- --------------------------------------------------------
 
@@ -62,9 +62,28 @@ INSERT INTO `auth_groups` (`id`, `name`, `description`) VALUES
 --
 
 CREATE TABLE `auth_groups_permissions` (
+  `id` int(11) NOT NULL,
   `group_id` int(11) UNSIGNED NOT NULL DEFAULT 0,
   `permission_id` int(11) UNSIGNED NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+--
+-- Dumping data untuk tabel `auth_groups_permissions`
+--
+
+INSERT INTO `auth_groups_permissions` (`id`, `group_id`, `permission_id`) VALUES
+(20, 1, 1),
+(21, 1, 2),
+(3, 1, 3),
+(4, 1, 4),
+(5, 1, 5),
+(6, 1, 7),
+(7, 1, 8),
+(8, 1, 9),
+(9, 1, 11),
+(11, 1, 12),
+(22, 1, 13),
+(16, 2, 11);
 
 -- --------------------------------------------------------
 
@@ -82,7 +101,9 @@ CREATE TABLE `auth_groups_users` (
 --
 
 INSERT INTO `auth_groups_users` (`group_id`, `user_id`) VALUES
-(1, 1);
+(1, 1),
+(2, 3),
+(2, 4);
 
 -- --------------------------------------------------------
 
@@ -114,7 +135,68 @@ INSERT INTO `auth_logins` (`id`, `ip_address`, `email`, `user_id`, `date`, `succ
 (8, '::1', 'admin@gmail.com', 1, '2024-03-23 16:36:03', 1),
 (9, '::1', 'admin@gmail.com', 1, '2024-03-23 17:23:45', 1),
 (10, '::1', 'admin@gmail.com', 1, '2024-03-23 17:25:11', 1),
-(11, '::1', 'admin@gmail.com', 1, '2024-03-25 01:57:49', 1);
+(11, '::1', 'admin@gmail.com', 1, '2024-03-25 01:57:49', 1),
+(12, '::1', 'admin@gmail.com', 1, '2024-03-26 01:38:13', 1),
+(13, '::1', 'admin@gmail.com', 1, '2024-03-26 02:04:56', 1),
+(14, '::1', 'pasien2@gmail.com', 3, '2024-03-26 02:50:22', 1),
+(15, '::1', 'admin@gmail.com', 1, '2024-03-26 02:50:36', 1),
+(16, '::1', 'admin@gmail.com', 1, '2024-03-27 01:21:37', 1),
+(17, '::1', 'admin@gmail.com', 1, '2024-03-27 01:22:51', 1),
+(18, '::1', 'admin@gmail.com', 1, '2024-03-27 01:44:30', 1),
+(19, '::1', 'admin@gmail.com', 1, '2024-03-27 03:50:45', 1),
+(20, '::1', 'admin@gmail.com', 1, '2024-03-27 03:51:55', 1),
+(21, '::1', 'admin@gmail.com', 1, '2024-03-27 04:14:25', 1),
+(22, '::1', 'admin@gmail.com', 1, '2024-03-27 04:14:35', 1),
+(23, '::1', 'admin@gmail.com', 1, '2024-03-27 04:20:27', 1),
+(24, '::1', 'admin@gmail.com', 1, '2024-03-27 04:20:35', 1),
+(25, '::1', 'admin@gmail.com', 1, '2024-03-27 04:20:58', 1),
+(26, '::1', 'admin', NULL, '2024-03-27 04:32:53', 0),
+(27, '::1', 'admin', NULL, '2024-03-27 04:33:23', 0),
+(28, '::1', 'admin', NULL, '2024-03-27 04:33:36', 0),
+(29, '::1', 'admin', NULL, '2024-03-27 04:33:45', 0),
+(30, '::1', 'admin', NULL, '2024-03-27 04:34:10', 0),
+(31, '::1', 'admin', NULL, '2024-03-27 04:34:13', 0),
+(32, '::1', 'admin@gmail.com', 1, '2024-03-27 04:34:20', 1),
+(33, '::1', 'pasien1@gmail.com', 4, '2024-03-27 04:40:59', 1),
+(34, '::1', 'pasien1', NULL, '2024-03-27 04:42:29', 0),
+(35, '::1', 'pasien1', NULL, '2024-03-27 04:42:53', 0),
+(36, '::1', 'pasien1', NULL, '2024-03-27 04:43:32', 0),
+(37, '::1', 'pasien1', NULL, '2024-03-27 04:47:14', 0),
+(38, '::1', 'pasien1', NULL, '2024-03-27 04:56:11', 0),
+(39, '::1', 'pasien1', NULL, '2024-03-27 04:56:28', 0),
+(40, '::1', 'pasien1', NULL, '2024-03-27 04:57:01', 0),
+(41, '::1', 'pasien1', NULL, '2024-03-27 05:00:58', 0),
+(42, '::1', 'pasien1', NULL, '2024-03-27 05:02:53', 0),
+(43, '::1', 'pasien1', NULL, '2024-03-27 05:48:19', 0),
+(44, '::1', 'pasien1', NULL, '2024-03-27 05:48:47', 0),
+(45, '::1', 'pasien1', NULL, '2024-03-27 05:51:07', 0),
+(46, '::1', 'pasien1', NULL, '2024-03-27 05:51:43', 0),
+(47, '::1', 'pasien1', NULL, '2024-03-27 05:53:21', 0),
+(48, '::1', 'pasien1', NULL, '2024-03-27 05:54:05', 0),
+(49, '::1', 'pasien1@gmail.com', 4, '2024-03-27 05:54:38', 1),
+(50, '::1', 'pasien1', NULL, '2024-03-27 05:57:28', 0),
+(51, '::1', 'pasien1@gmail.com', 4, '2024-03-27 06:00:37', 1),
+(52, '::1', 'pasien1@gmail.com', 4, '2024-03-27 06:03:07', 1),
+(53, '::1', 'admin', NULL, '2024-03-27 06:04:16', 0),
+(54, '::1', 'admin@gmail.com', 1, '2024-03-27 06:04:23', 1),
+(55, '::1', 'admin@gmail.com', 1, '2024-03-27 06:04:38', 1),
+(56, '::1', 'admin@gmail.com', 1, '2024-03-27 06:04:50', 1),
+(57, '::1', 'admin@gmail.com', 1, '2024-03-27 06:04:57', 1),
+(58, '::1', 'admin@gmail.com', 1, '2024-03-27 06:05:21', 1),
+(59, '::1', 'admin@gmail.com', 1, '2024-03-27 06:09:58', 1),
+(60, '::1', 'admin@gmail.com', 1, '2024-03-27 06:15:35', 1),
+(61, '::1', 'pasien1', NULL, '2024-03-27 06:19:38', 0),
+(62, '::1', 'pasien1@gmail.com', 4, '2024-03-27 06:19:45', 1),
+(63, '::1', 'admin@gmail.com', 1, '2024-03-27 06:24:34', 1),
+(64, '::1', 'admin@gmail.com', 1, '2024-03-28 02:19:20', 1),
+(65, '::1', 'pasien1@gmail.com', 4, '2024-03-28 02:23:12', 1),
+(66, '::1', 'admin@gmail.com', 1, '2024-04-01 05:46:49', 1),
+(67, '::1', 'admin@gmail.com', 1, '2024-04-01 14:59:46', 1),
+(68, '::1', 'admin@gmail.com', 1, '2024-04-01 15:09:07', 1),
+(69, '::1', 'admin@gmail.com', 1, '2024-04-02 01:45:55', 1),
+(70, '::1', 'admin@gmail.com', 1, '2024-04-03 03:03:48', 1),
+(71, '::1', 'admin@gmail.com', 1, '2024-04-03 03:18:10', 1),
+(72, '::1', 'admin@gmail.com', 1, '2024-04-03 03:45:23', 1);
 
 -- --------------------------------------------------------
 
@@ -135,14 +217,17 @@ CREATE TABLE `auth_permissions` (
 --
 
 INSERT INTO `auth_permissions` (`id`, `name`, `url`, `icon`, `status`) VALUES
-(1, 'Manajemen Pengguna', 'daftar_users', 'fas fa-users', 1),
-(2, 'Manajemen Pasien', 'daftar_pasien', 'fas fa-hospital-user', 1),
-(3, 'Manajemen Gejala', 'daftar_gejala', 'fas fa-table', 1),
-(4, 'Manajemen Penyakit', 'daftar_penyakit', 'fas fa-viruses', 1),
-(5, 'Manajemen Menu', 'daftar_menu', 'fas fa-bars', 1),
-(7, 'Manajemen Relasi', 'daftar_relasi', 'fas fa-link', 1),
-(8, 'Manajemen Bobot', 'daftar_bobot', 'fas fa-weight', 1),
-(9, 'Manajemen Diagnosa', 'daftar_diagnosa', 'fas fa-stethoscope', 1);
+(1, 'Data Pengguna', 'daftar_pengguna', 'fas fa-users', 1),
+(2, 'Data Pasien', 'daftar_pasien', 'fas fa-hospital-user', 1),
+(3, 'Data Gejala', 'daftar_gejala', 'fas fa-table', 1),
+(4, 'Data Penyakit', 'daftar_penyakit', 'fas fa-viruses', 1),
+(5, 'Data Menu', 'daftar_menu', 'fas fa-bars', 1),
+(7, 'Data Aturan', 'daftar_relasi', 'fas fa-link', 1),
+(8, 'Data Bobot', 'daftar_bobot', 'fas fa-weight', 1),
+(9, 'Data Kasus Baru', 'daftar_diagnosa', 'fas fa-stethoscope', 1),
+(11, 'Dashboard', '/', 'fa-solid fa-gauge', 1),
+(12, 'Data Akses Menu', 'akses_menu', 'fas fa-link', 1),
+(13, 'Data Kasus Lama', 'daftar_kasusLama', 'fa-solid fa-archive', 1);
 
 -- --------------------------------------------------------
 
@@ -196,15 +281,6 @@ CREATE TABLE `bobot` (
   `nilai` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data untuk tabel `bobot`
---
-
-INSERT INTO `bobot` (`id`, `parameter`, `nilai`) VALUES
-(1, 'Gejala Penting', 5),
-(2, 'Gejala Sedang', 3),
-(3, 'Gejala Biasa', 1);
-
 -- --------------------------------------------------------
 
 --
@@ -218,37 +294,27 @@ CREATE TABLE `data_gejala` (
   `deskripsi` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data untuk tabel `data_gejala`
---
-
-INSERT INTO `data_gejala` (`id`, `kode`, `nama`, `deskripsi`) VALUES
-(1, 'G01', 'Nyeri Perut', 'Nyeri perut adalah sensasi ketidaknyamanan atau nyeri yang terlokalisasi di daerah perut, yang dapat disebabkan oleh berbagai kondisi medis seperti gangguan pencernaan, infeksi, atau masalah pada organ-organ di sekitar perut.'),
-(2, 'G02', 'Mual', ' Mual adalah sensasi tidak nyaman yang membuat ingin muntah, sering terjadi sebagai respons terhadap gangguan pencernaan, infeksi, atau efek samping dari obat-obatan.'),
-(3, 'G03', 'Muntah', 'Muntah adalah proses pengosongan isi lambung melalui mulut, yang merupakan respons tubuh terhadap berbagai kondisi seperti infeksi, gangguan pencernaan, atau efek samping dari obat-obatan.'),
-(4, 'G04', 'Sakit Tenggorokan', 'Sakit tenggorokan adalah kondisi di mana terjadi rasa nyeri, iritasi, atau ketidaknyamanan di tenggorokan, yang dapat disebabkan oleh infeksi virus, radang tenggorokan, alergi, atau iritasi akibat polusi udara atau asap rokok.'),
-(5, 'G05', 'Demam', ' Demam adalah kondisi tubuh yang mengalami peningkatan suhu di atas normalnya, biasanya sebagai respon terhadap infeksi, peradangan, atau penyakit lainnya, di mana sistem kekebalan tubuh berusaha melawan agen penyebabnya.');
-
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `data_pasien`
+-- Struktur dari tabel `data_kasuslama`
 --
 
-CREATE TABLE `data_pasien` (
+CREATE TABLE `data_kasuslama` (
   `id` int(11) NOT NULL,
-  `no_rm` varchar(50) NOT NULL,
-  `nama` varchar(50) NOT NULL,
-  `jk` varchar(50) NOT NULL,
-  `umur` varchar(50) NOT NULL
+  `penyakit_id` int(11) NOT NULL,
+  `gejala` varchar(200) NOT NULL,
+  `bobot` varchar(200) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data untuk tabel `data_pasien`
+-- Dumping data untuk tabel `data_kasuslama`
 --
 
-INSERT INTO `data_pasien` (`id`, `no_rm`, `nama`, `jk`, `umur`) VALUES
-(3, '1', 'Marfel Crisly', 'Laki-Laki', '24');
+INSERT INTO `data_kasuslama` (`id`, `penyakit_id`, `gejala`, `bobot`) VALUES
+(2, 5, '[\"12\",\"1\",\"7\",\"16\",\"5\"]', '[\"2\",\"1\",\"1\",\"1\",\"1\"]'),
+(3, 2, '[\"12\",\"8\",\"14\",\"2\",\"3\",\"7\",\"17\",\"11\",\"5\"]', '[\"2\",\"1\",\"1\",\"1\",\"2\",\"1\",\"2\",\"3\",\"1\"]'),
+(4, 3, '[\"1\",\"14\",\"11\",\"5\"]', '[\"1\",\"1\",\"3\",\"1\"]');
 
 -- --------------------------------------------------------
 
@@ -265,15 +331,6 @@ CREATE TABLE `data_penyakit` (
   `img` varchar(255) NOT NULL DEFAULT 'default.jpg'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data untuk tabel `data_penyakit`
---
-
-INSERT INTO `data_penyakit` (`id`, `kode`, `nama`, `deskripsi`, `perawatan`, `img`) VALUES
-(1, 'P01', 'GERD', 'Gastroesophageal Reflux Disease (GERD) adalah kondisi medis di mana asam lambung secara berulang naik ke dalam kerongkongan, menyebabkan gejala seperti mulas, sensasi terbakar di dada, dan dapat menyebabkan kerusakan pada kerongkongan akibat iritasi kronis.', 'Perawatan GERD sering kali melibatkan kombinasi dari perubahan gaya hidup, seperti menghindari makanan pedas dan berlemak, menyesuaikan pola makan, serta menggunakan obat-obatan seperti antasida, inhibitor pompa proton (PPI), atau obat antiasam untuk mengurangi produksi asam lambung dan meredakan gejala. Dalam kasus yang lebih parah, prosedur medis seperti pemasangan alat penghambat asam lambung (LINX) atau operasi juga dapat direkomendasikan oleh dokter untuk mengatasi kondisi ini secara efektif.', 'default.jpg'),
-(2, 'P02', 'Gastritis ', '\r\nGastritis adalah kondisi medis yang ditandai oleh peradangan pada dinding lambung. Ini dapat terjadi ketika lapisan pelindung lambung rusak atau terganggu, yang memungkinkan asam lambung merusak dinding lambung. Beberapa faktor yang dapat menyebabkan gastritis meliputi infeksi bakteri Helicobacter pylori, konsumsi alkohol secara berlebihan, penggunaan obat-obatan nonsteroid antiinflamasi (NSAID), stres kronis, atau gangguan autoimun di mana sistem kekebalan tubuh menyerang sel-sel sehat dalam lambung. Gejalanya bervariasi dari ringan hingga parah, termasuk nyeri atau perih pada bagian atas perut, mual, muntah, gangguan pencernaan, atau pendarahan di saluran pencernaan. Pengobatan biasanya melibatkan perubahan gaya hidup seperti menghindari makanan atau minuman yang dapat memperburuk gejala, penggunaan obat-obatan untuk mengurangi produksi asam lambung, atau antibiotik untuk mengobati infeksi bakteri H. pylori. Penting untuk berkonsultasi dengan dokter untuk diagnosis dan penanganan y', '\r\nPerawatan gastritis tergantung pada penyebabnya dan tingkat keparahan gejalanya. Untuk kasus ringan, perawatan biasanya melibatkan perubahan gaya hidup seperti menghindari makanan pedas, asam, atau berlemak yang dapat memicu gejala, serta menghindari alkohol dan merokok. Penggunaan obat-obatan seperti antasida, penghambat reseptor H2, atau penghambat pompa proton dapat membantu mengurangi produksi asam lambung dan meredakan gejala. Jika gastritis disebabkan oleh infeksi bakteri H. pylori, terapi antibiotik mungkin diperlukan untuk menghilangkan infeksi. Penting juga untuk mengelola stres dan menjaga pola makan yang teratur. Dalam kasus gastritis yang lebih serius atau kronis, pemeriksaan lanjutan dan perawatan lebih lanjut oleh dokter atau spesialis pencernaan mungkin diperlukan. Adanya perawatan yang tepat dapat membantu mengendalikan gejala gastritis dan mencegah komplikasi yang lebih serius.', 'default.jpg'),
-(3, 'P03', 'Tukak Lambung', 'Tukak lambung, juga dikenal sebagai ulkus peptikum, adalah luka atau kerusakan pada lapisan dalam dinding lambung atau bagian atas usus halus yang disebabkan oleh adanya kelebihan asam lambung dan infeksi bakteri Helicobacter pylori. Tukak lambung dapat menyebabkan nyeri abdomen, perut terasa kembung, mual, muntah, serta perdarahan yang dapat mengakibatkan tinja berwarna hitam atau terdapat darah pada muntahan.', 'Perawatan untuk tukak lambung bertujuan untuk mengurangi produksi asam lambung, melindungi lapisan lambung yang rusak, serta mempercepat penyembuhan luka. Ini sering melibatkan kombinasi dari obat-obatan dan perubahan gaya hidup. Dokter mungkin meresepkan obat antasid, inhibitor pompa proton (PPI), atau obat H2 blocker untuk mengurangi produksi asam lambung. Penggunaan antibiotik juga dapat direkomendasikan jika infeksi H. pylori hadir. Selain itu, perubahan gaya hidup seperti menghindari makanan pedas, berlemak, dan berbumbu, menghindari merokok dan konsumsi alkohol, serta mengurangi stres juga dapat membantu mempercepat penyembuhan tukak lambung. Dalam kasus yang parah atau jika terjadi komplikasi seperti perdarahan berat, intervensi medis seperti endoskopi untuk menghentikan perdarahan atau operasi mungkin diperlukan. Penting untuk berkonsultasi dengan dokter untuk diagnosis dan rencana perawatan yang tepat sesuai dengan kondisi individu.', 'default.jpg');
-
 -- --------------------------------------------------------
 
 --
@@ -282,20 +339,13 @@ INSERT INTO `data_penyakit` (`id`, `kode`, `nama`, `deskripsi`, `perawatan`, `im
 
 CREATE TABLE `hasil_diagnosa` (
   `id` int(11) NOT NULL,
-  `pasien_id` int(11) NOT NULL,
+  `pasien_id` int(11) UNSIGNED NOT NULL,
+  `gejala` varchar(200) NOT NULL,
   `penyakit_id` int(11) NOT NULL,
-  `kesamaan` varchar(20) NOT NULL,
-  `tanggal` date NOT NULL
+  `tanggal` date NOT NULL,
+  `persenan` varchar(20) NOT NULL,
+  `kriteria` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data untuk tabel `hasil_diagnosa`
---
-
-INSERT INTO `hasil_diagnosa` (`id`, `pasien_id`, `penyakit_id`, `kesamaan`, `tanggal`) VALUES
-(1, 3, 1, '0.8', '2024-03-25'),
-(2, 3, 3, '0.42857142857143', '2024-03-25'),
-(3, 3, 1, '1', '2024-03-25');
 
 -- --------------------------------------------------------
 
@@ -328,23 +378,10 @@ INSERT INTO `migrations` (`id`, `version`, `class`, `group`, `namespace`, `time`
 
 CREATE TABLE `relasi_gp` (
   `id` int(11) NOT NULL,
-  `pyk_id` int(11) NOT NULL,
+  `pyk_id` int(11) DEFAULT NULL,
   `gjl_id` int(11) NOT NULL,
   `bobot_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data untuk tabel `relasi_gp`
---
-
-INSERT INTO `relasi_gp` (`id`, `pyk_id`, `gjl_id`, `bobot_id`) VALUES
-(1, 1, 1, 1),
-(2, 1, 2, 2),
-(3, 2, 1, 2),
-(4, 2, 3, 2),
-(5, 3, 1, 2),
-(6, 3, 4, 2),
-(7, 3, 5, 3);
 
 -- --------------------------------------------------------
 
@@ -357,6 +394,10 @@ CREATE TABLE `users` (
   `email` varchar(255) NOT NULL,
   `username` varchar(30) DEFAULT NULL,
   `password_hash` varchar(255) NOT NULL,
+  `no_rm` varchar(20) NOT NULL,
+  `name` varchar(20) NOT NULL,
+  `jk` varchar(20) NOT NULL,
+  `umur` varchar(20) NOT NULL,
   `reset_hash` varchar(255) DEFAULT NULL,
   `reset_at` datetime DEFAULT NULL,
   `reset_expires` datetime DEFAULT NULL,
@@ -374,8 +415,10 @@ CREATE TABLE `users` (
 -- Dumping data untuk tabel `users`
 --
 
-INSERT INTO `users` (`id`, `email`, `username`, `password_hash`, `reset_hash`, `reset_at`, `reset_expires`, `activate_hash`, `status`, `status_message`, `active`, `force_pass_reset`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(1, 'admin@gmail.com', 'admin', '$2y$10$QhY1jJ/5KDzwNdd/lFXwGO1SrNuyEjOjych1aXKU4nj76JwK80ldK', NULL, NULL, NULL, NULL, NULL, NULL, 1, 0, '2024-03-21 01:53:14', '2024-03-21 01:53:14', NULL);
+INSERT INTO `users` (`id`, `email`, `username`, `password_hash`, `no_rm`, `name`, `jk`, `umur`, `reset_hash`, `reset_at`, `reset_expires`, `activate_hash`, `status`, `status_message`, `active`, `force_pass_reset`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(1, 'admin@gmail.com', 'admin', '$2y$10$5X9L.BVgzLT.m.7YDDXpzuCSsGIKuiVEGr/DI0.trSyNuDz7ssDqu', '', 'Admin', '', '', NULL, NULL, NULL, NULL, NULL, NULL, 1, 0, '2024-03-21 01:53:14', '2024-03-21 01:53:14', NULL),
+(3, 'pasien2@gmail.com', 'pasien2', '$2y$10$l6TnNA80saGQ29CkApJZ4ejV6XvsvVjxCG3B8huX04VPNdS9R9tOu', 'PA02', 'Pasien 2', 'Perempuan', '25', NULL, NULL, NULL, NULL, NULL, NULL, 1, 0, '2024-03-26 03:22:13', '2024-03-26 03:22:13', NULL),
+(4, 'pasien1@gmail.com', 'pasien1', '$2y$10$ANf6V0BwtwSDwHky21cnVOxlLKXml3gfjQc7wddx7mvqrUbTUAJkK', 'PA03', 'Pasien 1', 'Laki-Laki', '25', NULL, NULL, NULL, NULL, NULL, NULL, 1, 0, '2024-03-26 03:39:31', '2024-03-26 03:39:31', NULL);
 
 --
 -- Indexes for dumped tables
@@ -397,6 +440,7 @@ ALTER TABLE `auth_groups`
 -- Indeks untuk tabel `auth_groups_permissions`
 --
 ALTER TABLE `auth_groups_permissions`
+  ADD PRIMARY KEY (`id`),
   ADD KEY `auth_groups_permissions_permission_id_foreign` (`permission_id`),
   ADD KEY `group_id_permission_id` (`group_id`,`permission_id`);
 
@@ -455,9 +499,9 @@ ALTER TABLE `data_gejala`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indeks untuk tabel `data_pasien`
+-- Indeks untuk tabel `data_kasuslama`
 --
-ALTER TABLE `data_pasien`
+ALTER TABLE `data_kasuslama`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -470,7 +514,8 @@ ALTER TABLE `data_penyakit`
 -- Indeks untuk tabel `hasil_diagnosa`
 --
 ALTER TABLE `hasil_diagnosa`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `pasien_id` (`pasien_id`);
 
 --
 -- Indeks untuk tabel `migrations`
@@ -482,8 +527,7 @@ ALTER TABLE `migrations`
 -- Indeks untuk tabel `relasi_gp`
 --
 ALTER TABLE `relasi_gp`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `pyk_id` (`pyk_id`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indeks untuk tabel `users`
@@ -510,16 +554,22 @@ ALTER TABLE `auth_groups`
   MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
+-- AUTO_INCREMENT untuk tabel `auth_groups_permissions`
+--
+ALTER TABLE `auth_groups_permissions`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+
+--
 -- AUTO_INCREMENT untuk tabel `auth_logins`
 --
 ALTER TABLE `auth_logins`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=73;
 
 --
 -- AUTO_INCREMENT untuk tabel `auth_permissions`
 --
 ALTER TABLE `auth_permissions`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT untuk tabel `auth_reset_attempts`
@@ -537,31 +587,31 @@ ALTER TABLE `auth_tokens`
 -- AUTO_INCREMENT untuk tabel `bobot`
 --
 ALTER TABLE `bobot`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT untuk tabel `data_gejala`
 --
 ALTER TABLE `data_gejala`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT untuk tabel `data_pasien`
+-- AUTO_INCREMENT untuk tabel `data_kasuslama`
 --
-ALTER TABLE `data_pasien`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+ALTER TABLE `data_kasuslama`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT untuk tabel `data_penyakit`
 --
 ALTER TABLE `data_penyakit`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT untuk tabel `hasil_diagnosa`
 --
 ALTER TABLE `hasil_diagnosa`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT untuk tabel `migrations`
@@ -573,13 +623,13 @@ ALTER TABLE `migrations`
 -- AUTO_INCREMENT untuk tabel `relasi_gp`
 --
 ALTER TABLE `relasi_gp`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT untuk tabel `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
@@ -613,10 +663,10 @@ ALTER TABLE `auth_users_permissions`
   ADD CONSTRAINT `auth_users_permissions_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
 
 --
--- Ketidakleluasaan untuk tabel `relasi_gp`
+-- Ketidakleluasaan untuk tabel `hasil_diagnosa`
 --
-ALTER TABLE `relasi_gp`
-  ADD CONSTRAINT `relasi_gp_ibfk_1` FOREIGN KEY (`pyk_id`) REFERENCES `data_penyakit` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `hasil_diagnosa`
+  ADD CONSTRAINT `hasil_diagnosa_ibfk_1` FOREIGN KEY (`pasien_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
