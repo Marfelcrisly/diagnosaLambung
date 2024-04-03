@@ -24,18 +24,28 @@
             <div class="row">
                 <div class="col-12">
                     <div class="card">
-                        <div class="card-header" style="display: flex; align-items: center;">
-                            <div class="select-group" style="margin-left: 2px;">
-                                <select id="controllerSelect" class="form-control form-control-sm input-outline-info" name="page">
-                                    <option value="10" <?= (old('page', $page) == '10') ? 'selected disabled' : ''; ?>>10</option>
-                                    <option value="25" <?= (old('page', $page) == '25') ? 'selected disabled' : ''; ?>>25</option>
-                                    <option value="50" <?= (old('page', $page) == '50') ? 'selected disabled' : ''; ?>>50</option>
-                                    <option value="100" <?= (old('page', $page) == '100') ? 'selected disabled' : ''; ?>>100</option>
-                                </select>
+                        <form action="" method="post">
+                            <div class="card-header" style="display: flex; align-items: center;">
+                                <div class="select-group" style="margin-left: 2px;">
+                                    <select id="controllerSelect" class="form-control form-control-sm input-outline-info" name="page">
+                                        <option value="10" <?= (old('page', $page) == '10') ? 'selected disabled' : ''; ?>>10</option>
+                                        <option value="25" <?= (old('page', $page) == '25') ? 'selected disabled' : ''; ?>>25</option>
+                                        <option value="50" <?= (old('page', $page) == '50') ? 'selected disabled' : ''; ?>>50</option>
+                                        <option value="100" <?= (old('page', $page) == '100') ? 'selected disabled' : ''; ?>>100</option>
+                                    </select>
+                                </div>
+                                <a href="<?= base_url('tambah_diagnosa') ?>" class="btn btn-outline-primary btn-sm d-inline mr-2 ml-2" style="width: auto; max-width: 50px;"><span><i class="fas fa-plus"></i> </span></a>
+                                <a href="<?= base_url('hapus_semua_diagnosa') ?>" class="btn btn-block btn-outline-danger btn-sm d-inline mr-2" style="width: auto; max-width: 50px;" onclick="return confirm('apakah anda yakin menghapus semua data?')"><span><i class="fas fa-trash"></i> </span></a>
+                                <div class="input-group input-group-sm">
+                                    <input type="text" class="form-control" placeholder="Keyword pencarian.." name="keyword" value="<?= old('keyword'); ?>">
+                                    <div class="input-group-append">
+                                        <button type="submit" class="btn btn-default">
+                                            <i class="fas fa-search"></i>
+                                        </button>
+                                    </div>
+                                </div>
                             </div>
-                            <a href="<?= base_url('tambah_diagnosa') ?>" class="btn btn-outline-primary btn-sm ml-2" style="width: auto; max-width: 100px;"><span><i class="fas fa-plus"></i> Tambah</span></a>
-                        </div>
-
+                        </form>
                         <div class="card-body">
                             <style>
                                 .center {
@@ -48,7 +58,8 @@
                                         <th>No.</th>
                                         <th>Nama Pasien</th>
                                         <th>Penyakit Pasien</th>
-                                        <th>Kesamaan</th>
+                                        <th>Persenan</th>
+                                        <th>Kriteria Kemiripan</th>
                                         <th>Tanggal Diagnosa</th>
                                         <th style="text-align: center;">Aksi</th>
                                     </tr>
@@ -60,13 +71,19 @@
                                             <td><?= $i++ ?></td>
                                             <td><?= $dt['nama_pasien'] ?></td>
                                             <td><?= $dt['nama_penyakit'] ?></td>
-                                            <td><?= $dt['kesamaan'] ?></td>
+                                            <td><?= number_format($dt['persenan'], 2) . '%' ?></td>
+                                            <td style="text-align: center;">
+                                                <span class="badge badge-<?= ($dt['kriteria'] === 'HIGH') ? 'danger' : (($dt['kriteria'] === 'MEDIUM') ? 'warning' : 'success'); ?>">
+                                                    <?= $dt['kriteria'] ?>
+                                                </span>
+                                            </td>
                                             <td><?= $dt['tanggal'] ?></td>
                                             <td style="text-align: center;">
+                                                <a type="button" href="<?= base_url('lihat_hasil/' . $dt['id']); ?>" class="btn btn-block btn-outline-info btn-sm d-inline" style="width: auto; max-width: 100;"><span><i class="fas fa-eye"></i> </span></a>
                                                 <form action="<?= base_url('hapus_diagnosa/' . $dt['id']); ?>" method="post" class="d-inline">
                                                     <?= csrf_field(); ?>
                                                     <input type="hidden" name="_method" value="DELETE">
-                                                    <button type="submit" class="btn btn-block btn-outline-danger btn-sm d-inline" onclick="return confirm('apakah anda yakin')" style="width: auto; max-width: 100;"><span><i class="fas fa-trash-alt"></i> </span></button>
+                                                    <button type="submit" class="btn btn-block btn-outline-danger btn-sm d-inline ml-2" onclick="return confirm('apakah anda yakin')" style="width: auto; max-width: 100;"><span><i class="fas fa-trash-alt"></i> </span></button>
                                                 </form>
                                             </td>
                                         </tr>

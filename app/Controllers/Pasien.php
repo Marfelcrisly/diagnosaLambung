@@ -2,10 +2,13 @@
 
 namespace App\Controllers;
 
+use CodeIgniter\API\ResponseTrait;
+
 use App\Models\ModelUsers;
 
 class Pasien extends BaseController
 {
+    use ResponseTrait;
 
     protected $modelPasien;
 
@@ -16,21 +19,28 @@ class Pasien extends BaseController
 
     public function daftar_pasien()
     {
+
+        $currentPage = $this->request->getVar('page_pasien') ? $this->request->getVar('page_pasien') : 1;
         $pasien = $this->modelPasien->select('users.id, username, no_rm, users.name, jk, umur')
             ->join('auth_groups_users', 'auth_groups_users.user_id = users.id')
             ->join('auth_groups', 'auth_groups.id = auth_groups_users.group_id')
-            ->where('auth_groups.name', 'pasien')
-            ->findAll();
+            ->where('auth_groups.name', 'pasien');
+
+        $page = $this->request->getVar('page') ? $this->request->getVar('page') : 10;
+        $data = $pasien->paginate($page, 'pasien', $currentPage);
 
         $data = [
             'title' => 'Data Pasien',
-            'data'  => $pasien
+            'data'  => $data,
+            'pager'      => $this->modelPasien->pager,
+            'currentPage' => $currentPage,
+            'page'       => $page,
         ];
 
         return view('pasien/daftar_pasien', $data);
     }
 
-    public function edit_pasien($id)
+    public function edit_pasien($id = null)
     {
         $pasien = $this->modelPasien->select('users.id, username, no_rm, users.name as nama, jk, umur')
             ->join('auth_groups_users', 'auth_groups_users.user_id = users.id')
@@ -49,7 +59,7 @@ class Pasien extends BaseController
         return view('pasien/edit_pasien', $data);
     }
 
-    public function perbarui_pasien($id)
+    public function perbarui_pasien($id = null)
     {
         $rules = [
             'no_rm' => [
@@ -101,7 +111,7 @@ class Pasien extends BaseController
         return redirect()->to('daftar_pasien');
     }
 
-    public function hapus_pasien($id)
+    public function hapus_pasien($id = null)
     {
         $this->modelPasien->where('id', $id)->delete();
         session()->setFlashdata('pesan', 'Data berhasil dihapus');

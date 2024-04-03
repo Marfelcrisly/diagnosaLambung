@@ -2,11 +2,14 @@
 
 namespace App\Controllers;
 
+use CodeIgniter\API\ResponseTrait;
+
 use App\Models\ModelPenyakit;
 use App\Models\ModelRelasi;
 
 class Penyakit extends BaseController
 {
+    use ResponseTrait;
 
     protected $modelPenyakit, $modelRelasi;
 
@@ -15,7 +18,6 @@ class Penyakit extends BaseController
         $this->modelPenyakit = new ModelPenyakit();
         $this->modelRelasi = new ModelRelasi();
     }
-
 
     public function daftar_penyakit()
     {
@@ -117,7 +119,7 @@ class Penyakit extends BaseController
         return redirect()->to('daftar_penyakit');
     }
 
-    public function edit_penyakit($id)
+    public function edit_penyakit($id = null)
     {
         $penyakit = $this->modelPenyakit->getPenyakit()->find($id);
 
@@ -129,7 +131,7 @@ class Penyakit extends BaseController
         return view('penyakit/edit_penyakit', $data);
     }
 
-    public function perbarui_penyakit($id)
+    public function perbarui_penyakit($id = null)
     {
         $rules = [
             'kode' => [
@@ -204,7 +206,7 @@ class Penyakit extends BaseController
         return redirect()->to('daftar_penyakit');
     }
 
-    public function hapus_penyakit($id)
+    public function hapus_penyakit($id = null)
     {
         $gambar = $this->modelPenyakit->find($id)['img'];
         if ($gambar !== 'default.jpg') {
@@ -216,7 +218,7 @@ class Penyakit extends BaseController
         return redirect()->to('daftar_penyakit');
     }
 
-    public function lihat_penyakit($id)
+    public function lihat_penyakit($id = null)
     {
         $penyakit = $this->modelPenyakit->getPenyakit()->find($id);
 

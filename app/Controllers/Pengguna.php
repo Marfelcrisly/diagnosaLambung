@@ -2,13 +2,18 @@
 
 namespace App\Controllers;
 
+use CodeIgniter\API\ResponseTrait;
+
 use App\Models\ModelUsers;
+use CodeIgniter\HTTP\RequestTrait;
 use Myth\Auth\Config\Auth as AuthConfig;
 use Myth\Auth\Entities\User;
 use Myth\Auth\Models\UserModel;
 
 class Pengguna extends BaseController
 {
+    use RequestTrait;
+    
     /**
      * @var AuthConfig
      */
@@ -109,14 +114,14 @@ class Pengguna extends BaseController
         return redirect()->to('daftar_pengguna');
     }
 
-    public function hapus_pengguna($id)
+    public function hapus_pengguna($id = null)
     {
         $this->modelUsers->where('id', $id)->delete();
         session()->setFlashdata('pesan', 'Data berhasil dihapus');
         return redirect()->to('daftar_pengguna');
     }
 
-    public function reset_password($id)
+    public function reset_password($id = null)
     {
         $user = new User();
         $password = '12345678';

@@ -2,12 +2,15 @@
 
 namespace App\Controllers;
 
+use CodeIgniter\API\ResponseTrait;
+
 use App\Models\ModelAksesMenu;
 use App\Models\ModelMenu;
 use App\Models\ModelRole;
 
 class Akses extends BaseController
 {
+    use ResponseTrait;
 
     protected $modelAksesMenu, $modelMenu, $modelRole;
 
@@ -31,7 +34,7 @@ class Akses extends BaseController
         }
 
         $data = [
-            'title' => 'Relasi Menu & Role',
+            'title' => 'Data Akses Menu',
             'menu'  => $menu,
             'roles' => $roles,
             'statusMenus' => $statusMenus

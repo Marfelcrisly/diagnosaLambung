@@ -22,11 +22,29 @@
     <section class="content">
         <div class="container-fluid">
             <div class="row">
-                <div class="col-8">
+                <div class="col-md-12">
                     <div class="card">
-                        <div class="card-header">
-                            <a href="<?= base_url('tambah_menu') ?>" class="btn btn-block btn-outline-primary btn-sm" style="width: auto; max-width: 100px;"><span><i class="fas fa-plus"></i> Tambah</span></a>
-                        </div>
+                        <form action="" method="post">
+                            <div class="card-header" style="display: flex; align-items: center;">
+                                <div class="select-group" style="margin-left: 2px;">
+                                    <select id="controllerSelect" class="form-control form-control-sm input-outline-info" name="page">
+                                        <option value="10" <?= (old('page', $page) == '10') ? 'selected disabled' : ''; ?>>10</option>
+                                        <option value="25" <?= (old('page', $page) == '25') ? 'selected disabled' : ''; ?>>25</option>
+                                        <option value="50" <?= (old('page', $page) == '50') ? 'selected disabled' : ''; ?>>50</option>
+                                        <option value="100" <?= (old('page', $page) == '100') ? 'selected disabled' : ''; ?>>100</option>
+                                    </select>
+                                </div>
+                                <a href="<?= base_url('tambah_menu') ?>" class="btn btn-outline-primary btn-sm d-inline mr-2 ml-2" style="width: auto; max-width: 50px;"><span><i class="fas fa-plus"></i> </span></a>
+                                <div class="input-group input-group-sm">
+                                    <input type="text" class="form-control" placeholder="Keyword pencarian.." name="keyword" value="<?= old('keyword'); ?>">
+                                    <div class="input-group-append">
+                                        <button type="submit" class="btn btn-default">
+                                            <i class="fas fa-search"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
                         <div class="card-body">
                             <table id="example2" class="table table-bordered table-hover">
                                 <thead>
@@ -40,7 +58,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <?php $i = 1 ?>
+                                    <?php $i = 1 + ($page * ($currentPage - 1)); ?>
                                     <?php foreach ($data as $dt) : ?>
                                         <tr>
                                             <td><?= $i++ ?></td>
@@ -69,16 +87,10 @@
                                         </tr>
                                     <?php endforeach; ?>
                                 </tbody>
-                                <tfoot>
-                                    <tr>
-                                        <th>No.</th>
-                                        <th>Nama</th>
-                                        <th>Url</th>
-                                        <th>Icon</th>
-                                        <th style="text-align: center;">Aksi</th>
-                                    </tr>
-                                </tfoot>
                             </table>
+                            <div class="text-center d-flex justify-content-center mt-2">
+                                <?= $pager->links('menu', 'paginations') ?>
+                            </div>
                         </div>
                     </div>
                 </div>

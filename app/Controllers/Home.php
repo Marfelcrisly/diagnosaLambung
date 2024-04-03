@@ -2,12 +2,16 @@
 
 namespace App\Controllers;
 
+use CodeIgniter\API\ResponseTrait;
+
 use App\Models\ModelUsers;
 use App\Models\ModelGejala;
 use Myth\Auth\Entities\User;
 
 class Home extends BaseController
 {
+    use ResponseTrait;
+
     protected $modelUsers, $modelGejala;
 
     public function __construct()
@@ -51,7 +55,7 @@ class Home extends BaseController
         return view('home/profile', $data);
     }
 
-    public function perbarui_profile($id)
+    public function perbarui_profile($id = null)
     {
         $rules = [
             'pass_confirm' => [

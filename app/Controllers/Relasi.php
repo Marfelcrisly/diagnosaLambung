@@ -2,6 +2,8 @@
 
 namespace App\Controllers;
 
+use CodeIgniter\API\ResponseTrait;
+
 use App\Models\ModelRelasi;
 use App\Models\ModelPenyakit;
 use App\Models\ModelGejala;
@@ -9,10 +11,9 @@ use App\Models\ModelBobot;
 
 class Relasi extends BaseController
 {
+    use ResponseTrait;
 
     protected $modelRelasi, $modelPenyakit, $modelGejala, $modelBobot;
-
-
 
     public function __construct()
     {
@@ -38,7 +39,7 @@ class Relasi extends BaseController
         $data = $relasi->paginate($page, 'relasi_gp', $currentPage);
 
         $data = [
-            'title' => 'Relasi Penyakit & Gejala',
+            'title' => 'Data Aturan',
             'data'  => $data,
             'pager'      => $this->modelRelasi->pager,
             'currentPage' => $currentPage,
@@ -116,7 +117,7 @@ class Relasi extends BaseController
         return redirect()->to('daftar_relasi');
     }
 
-    public function edit_relasi($id)
+    public function edit_relasi($id = null)
     {
         $relasi = $this->modelRelasi->getRelasi()->find($id);
 
@@ -135,7 +136,7 @@ class Relasi extends BaseController
         return view('relasi/edit_Relasi', $data);
     }
 
-    public function perbarui_relasi($id)
+    public function perbarui_relasi($id = null)
     {
         $pyk_id = $this->request->getVar('pyk_id');
         $gjl_id = $this->request->getVar('gjl_id');
@@ -190,7 +191,7 @@ class Relasi extends BaseController
         return redirect()->to('daftar_relasi');
     }
 
-    public function hapus_relasi($id)
+    public function hapus_relasi($id = null)
     {
         $this->modelRelasi->where('id', $id)->delete();
         session()->setFlashdata('pesan', 'Data berhasil dihapus');

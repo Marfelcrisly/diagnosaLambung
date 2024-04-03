@@ -2,14 +2,15 @@
 
 namespace App\Controllers;
 
+use CodeIgniter\API\ResponseTrait;
+
 use App\Models\ModelBobot;
 
 class Bobot extends BaseController
 {
+    use ResponseTrait;
 
     protected $modelBobot;
-
-
 
     public function __construct()
     {
@@ -19,11 +20,19 @@ class Bobot extends BaseController
 
     public function daftar_bobot()
     {
-        $bobot = $this->modelBobot->getBobot()->orderBy('nilai', 'desc')->findAll();
+        $currentPage = $this->request->getVar('page_bobot') ? $this->request->getVar('page_bobot') : 1;
+        $bobot = $this->modelBobot->getBobot()->orderBy('nilai', 'desc');
+
+        $page = $this->request->getVar('page') ? $this->request->getVar('page') : 10;
+        $data = $bobot->paginate($page, 'bobot', $currentPage);
+
 
         $data = [
             'title' => 'Data Bobot',
-            'data'  => $bobot
+            'data'  => $data,
+            'pager'      => $this->modelBobot->pager,
+            'currentPage' => $currentPage,
+            'page'       => $page,
         ];
 
         return view('bobot/daftar_bobot', $data);
@@ -73,7 +82,7 @@ class Bobot extends BaseController
         return redirect()->to('daftar_bobot');
     }
 
-    public function edit_bobot($id)
+    public function edit_bobot($id = null)
     {
         $bobot = $this->modelBobot->getBobot()->find($id);
 
@@ -85,7 +94,7 @@ class Bobot extends BaseController
         return view('bobot/edit_bobot', $data);
     }
 
-    public function perbarui_bobot($id)
+    public function perbarui_bobot($id = null)
     {
         $rules = [
             'parameter' => [
@@ -121,10 +130,17 @@ class Bobot extends BaseController
         return redirect()->to('daftar_bobot');
     }
 
-    public function hapus_bobot($id)
+    public function hapus_bobot($id = null)
     {
         $this->modelBobot->where('id', $id)->delete();
         session()->setFlashdata('pesan', 'Data berhasil dihapus');
+        return redirect()->to('daftar_bobot');
+    }
+
+    public function hapus_semua_bobot()
+    {
+        $this->modelBobot->truncate();
+        session()->setFlashdata('pesan', 'Semua Data berhasil dihapus');
         return redirect()->to('daftar_bobot');
     }
 }

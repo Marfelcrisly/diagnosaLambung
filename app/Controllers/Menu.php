@@ -2,15 +2,16 @@
 
 namespace App\Controllers;
 
+use CodeIgniter\API\ResponseTrait;
+
 use App\Models\ModelMenu;
 use App\Models\ModelAksesMenu;
 
 class Menu extends BaseController
 {
+    use ResponseTrait;
 
     protected $modelMenu, $modelAksesMenu, $db;
-
-
 
     public function __construct()
     {
@@ -23,14 +24,21 @@ class Menu extends BaseController
 
     public function daftar_menu()
     {
-        $menu = $this->modelMenu->getMenu()->orderBy('name', 'asc')->findAll();
+        $currentPage = $this->request->getVar('page_menu') ? $this->request->getVar('page_menu') : 1;
+        $menu = $this->modelMenu->getMenu()->orderBy('name', 'asc');
 
         $role = $this->db->table('auth_groups')->select('*')->get()->getResultArray();
 
+        $page = $this->request->getVar('page') ? $this->request->getVar('page') : 10;
+        $data = $menu->paginate($page, 'menu', $currentPage);
+
         $data = [
             'title' => 'Data Menu',
-            'data'  => $menu,
+            'data'  => $data,
             'role'  => $role,
+            'pager'      => $this->modelMenu->pager,
+            'currentPage' => $currentPage,
+            'page'       => $page,
         ];
 
         return view('menu/daftar_menu', $data);
@@ -89,7 +97,7 @@ class Menu extends BaseController
         return redirect()->to('daftar_menu');
     }
 
-    public function edit_menu($id)
+    public function edit_menu($id = null)
     {
         $menu = $this->modelMenu->getMenu()->find($id);
 
@@ -101,7 +109,7 @@ class Menu extends BaseController
         return view('menu/edit_menu', $data);
     }
 
-    public function perbarui_menu($id)
+    public function perbarui_menu($id = null)
     {
         $rules = [
             'name' => [
@@ -146,14 +154,14 @@ class Menu extends BaseController
         return redirect()->to('daftar_menu');
     }
 
-    public function hapus_menu($id)
+    public function hapus_menu($id = null)
     {
         $this->modelMenu->where('id', $id)->delete();
         session()->setFlashdata('pesan', 'Data berhasil dihapus');
         return redirect()->to('daftar_menu');
     }
 
-    public function status($id)
+    public function status($id = null)
     {
         $status = $this->request->getVar('status');
 

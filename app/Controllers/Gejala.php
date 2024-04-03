@@ -2,14 +2,15 @@
 
 namespace App\Controllers;
 
+use CodeIgniter\API\ResponseTrait;
+
 use App\Models\ModelGejala;
 
 class Gejala extends BaseController
 {
+    use ResponseTrait;
 
     protected $modelGejala;
-
-
 
     public function __construct()
     {
@@ -18,6 +19,7 @@ class Gejala extends BaseController
 
     public function daftar_gejala()
     {
+        $currentPage = $this->request->getVar('page_gejala') ? $this->request->getVar('page_gejala') : 1;
         $keyword = $this->request->getVar('keyword');
         $gejala = $this->modelGejala->getGejala()->orderBy('kode', 'asc');
 
@@ -25,12 +27,16 @@ class Gejala extends BaseController
             $gejala = $gejala->like('nama', $keyword);
         }
 
-        $gejala = $gejala->findAll();
+        $page = $this->request->getVar('page') ? $this->request->getVar('page') : 10;
+        $data = $gejala->paginate($page, 'gejala', $currentPage);
 
         $data = [
             'title' => 'Data Gejala',
-            'data'  => $gejala,
-            'keyword' => $keyword
+            'data'  => $data,
+            'keyword' => $keyword,
+            'pager'      => $this->modelGejala->pager,
+            'currentPage' => $currentPage,
+            'page'       => $page,
         ];
 
         return view('gejala/daftar_gejala', $data);
@@ -98,7 +104,7 @@ class Gejala extends BaseController
         return redirect()->to('daftar_gejala');
     }
 
-    public function edit_gejala($id)
+    public function edit_gejala($id = null)
     {
         $gejala = $this->modelGejala->getGejala()->find($id);
 
@@ -110,7 +116,7 @@ class Gejala extends BaseController
         return view('gejala/edit_gejala', $data);
     }
 
-    public function perbarui_gejala($id)
+    public function perbarui_gejala($id = null)
     {
         $rules = [
             'kode' => [
@@ -155,7 +161,7 @@ class Gejala extends BaseController
         return redirect()->to('daftar_gejala');
     }
 
-    public function hapus_gejala($id)
+    public function hapus_gejala($id = null)
     {
         $this->modelGejala->where('id', $id)->delete();
         session()->setFlashdata('pesan', 'Data berhasil dihapus');

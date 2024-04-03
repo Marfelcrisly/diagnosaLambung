@@ -24,54 +24,65 @@
                 <div class="col-md-6">
                     <div class="card card-primary">
                         <div class="card-header">
-                            <h3 class="card-title">Data Diagnosa</h3>
+                            <h3 class="card-title">Data Kasus Lama</h3>
                         </div>
-                        <form action="<?= base_url('simpan_diagnosa'); ?>" method="post">
+                        <form action="<?= base_url('simpan_kasusLama'); ?>" method="post">
                             <?= csrf_field() ?>
                             <div class="card-body">
                                 <div class="form-group row">
                                     <div class="col-md-4">
-                                        <label for="">Nama Pasien</label>
-                                        <select name="pasien_id" class="form-control custom-select <?php if (session('errors.pasien_id')) : ?>is-invalid<?php endif  ?>">
+                                        <label for="">Penyakit</label>
+                                        <select name="penyakit_id" class="form-control custom-select <?php if (session('errors.penyakit_id')) : ?>is-invalid<?php endif  ?>">
                                             <option selected disabled>--Pilih--</option>
-                                            <?php foreach ($namaPasien as $nama) : ?>
-                                                <option value="<?= $nama['id']; ?>" <?= (old('pasien_id') == $nama['id']) ? 'selected' : ''; ?>><?= $nama['name']; ?></option>
+                                            <?php foreach ($penyakit as $pyk) : ?>
+                                                <option value="<?= $pyk['id']; ?>" <?= (old('penyakit_id') == $pyk['id']) ? 'selected' : ''; ?>><?= $pyk['nama']; ?></option>
                                             <?php endforeach; ?>
                                         </select>
                                         <div class="invalid-feedback">
-                                            <?= session('errors.pasien_id') ?>
+                                            <?= session('errors.penyakit_id') ?>
                                         </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <label for="">Tanggal</label>
-                                        <input type="text" class="form-control" name="tanggal" value="<?= date('Y-m-d'); ?>" readonly>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <table id="example2" class="table table-bordered table-hover">
                                         <thead>
                                             <tr>
-                                                <th>Pertanyaan ?</th>
-                                                <th>Kode Gejala</th>
+                                                <th>Gejala</th>
                                                 <th style="text-align: center;">
                                                     <div class="form-check">
-                                                        <input type="checkbox" id="checkAll" class="form-check-input">
-                                                        <label for="checkAll" class="form-check-label">Jawab</label>
+                                                        <input type="checkbox" id="checkAll" class="form-check-input" name="checkAll" <?= (old('checkAll')) ? 'checked' : ''; ?>>
+                                                        <label for="checkAll" class="form-check-label">Pilih</label>
                                                     </div>
                                                 </th>
+
+                                                <th style="text-align: center;">Bobot</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <?php foreach ($namaGejala as $gejala) : ?>
                                                 <tr>
                                                     <td><?= $gejala['nama']; ?></td>
-                                                    <td><?= $gejala['kode']; ?></td>
                                                     <td style="text-align: center;">
                                                         <div class="form-check">
                                                             <input type="checkbox" name="diagnosa[]" id="diagnosa<?= $gejala['id']; ?>" class="form-check-input <?php if (session('errors.diagnosa')) : ?>is-invalid<?php endif  ?>" value="<?= $gejala['id']; ?>" <?= is_array(old('diagnosa')) && in_array($gejala['id'], old('diagnosa')) ? 'checked' : ''; ?>>
                                                             <br>
                                                             <div class="invalid-feedback">
                                                                 <?= session('errors.diagnosa') ?>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="form-group row justify-content-md-center">
+                                                            <div class="col-md-8">
+                                                                <select name="bobot[]" class="form-control custom-select <?php if (session('errors.bobot')) : ?>is-invalid<?php endif; ?>">
+                                                                    <option selected disabled>Pilih</option>
+                                                                    <?php foreach ($bobot as $b) : ?>
+                                                                        <option value="<?= $b['id']; ?>"><?= $b['nilai']; ?></option>
+                                                                    <?php endforeach; ?>
+                                                                </select>
+                                                                <div class="invalid-feedback">
+                                                                    <?= session('errors.bobot') ?>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </td>

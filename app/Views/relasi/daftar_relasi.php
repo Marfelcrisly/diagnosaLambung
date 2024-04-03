@@ -22,21 +22,30 @@
     <section class="content">
         <div class="container-fluid">
             <div class="row">
-                <div class="col-5">
+                <div class="col-12">
                     <div class="card">
-                        <div class="card-header" style="display: flex; align-items: center;">
-                            <div class="select-group" style="margin-left: 2px;">
-                                <select id="controllerSelect" class="form-control form-control-sm input-outline-info" name="page">
-                                    <option value="10" <?= (old('page', $page) == '10') ? 'selected disabled' : ''; ?>>10</option>
-                                    <option value="25" <?= (old('page', $page) == '25') ? 'selected disabled' : ''; ?>>25</option>
-                                    <option value="50" <?= (old('page', $page) == '50') ? 'selected disabled' : ''; ?>>50</option>
-                                    <option value="100" <?= (old('page', $page) == '100') ? 'selected disabled' : ''; ?>>100</option>
-                                </select>
+                        <form action="" method="post">
+                            <div class="card-header" style="display: flex; align-items: center;">
+                                <div class="select-group" style="margin-left: 2px;">
+                                    <select id="controllerSelect" class="form-control form-control-sm input-outline-info" name="page">
+                                        <option value="10" <?= (old('page', $page) == '10') ? 'selected disabled' : ''; ?>>10</option>
+                                        <option value="25" <?= (old('page', $page) == '25') ? 'selected disabled' : ''; ?>>25</option>
+                                        <option value="50" <?= (old('page', $page) == '50') ? 'selected disabled' : ''; ?>>50</option>
+                                        <option value="100" <?= (old('page', $page) == '100') ? 'selected disabled' : ''; ?>>100</option>
+                                    </select>
+                                </div>
+                                <a href="<?= base_url('tambah_relasi') ?>" class="btn btn-outline-primary btn-sm d-inline mr-2 ml-2" style="width: auto; max-width: 50px;"><span><i class="fas fa-plus"></i> </span></a>
+                                <a href="<?= base_url('hapus_semua_relasi') ?>" class="btn btn-block btn-outline-danger btn-sm d-inline mr-2" style="width: auto; max-width: 50px;" onclick="return confirm('apakah anda yakin menghapus semua data?')"><span><i class="fas fa-trash"></i> </span></a>
+                                <div class="input-group input-group-sm">
+                                    <input type="text" class="form-control" placeholder="Keyword pencarian.." name="keyword" value="<?= old('keyword'); ?>">
+                                    <div class="input-group-append">
+                                        <button type="submit" class="btn btn-default">
+                                            <i class="fas fa-search"></i>
+                                        </button>
+                                    </div>
+                                </div>
                             </div>
-                            <a href="<?= base_url('tambah_relasi') ?>" class="btn btn-outline-primary btn-sm ml-2" style="width: auto; max-width: 100px;"><span><i class="fas fa-plus"></i> Tambah</span></a>
-                            <a href="<?= base_url('hapus_semua_relasi') ?>" class="btn btn-outline-danger btn-sm ml-2" style="width: auto; max-width: 100px;" onclick="return confirm('apakah anda yakin menghapus semua data?')"><span><i class="fas fa-trash"></i> Hapus</span></a>
-                        </div>
-
+                        </form>
                         <div class="card-body">
                             <style>
                                 .center {
@@ -83,17 +92,5 @@
     </section>
 
 </div>
-
-<script>
-    document.getElementById('controllerSelect').addEventListener('change', function() {
-        const selectedValue = this.value;
-        let baseUrl = window.location.protocol + "//" + window.location.host + window.location.pathname;
-        let searchParams = new URLSearchParams(window.location.search);
-        searchParams.set('page', selectedValue);
-        let newQueryString = searchParams.toString();
-
-        window.location.href = baseUrl + '?' + newQueryString;
-    });
-</script>
 
 <?= $this->endSection(); ?>

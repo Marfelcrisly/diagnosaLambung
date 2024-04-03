@@ -75,10 +75,22 @@
 
     <script>
         document.getElementById('checkAll').addEventListener('click', function() {
-            var checkboxes = document.querySelectorAll('input[type="checkbox"]  ');
-            checkboxes.forEach(function(checkbox) {
+            var checkboxes = document.querySelectorAll('input[id^="diagnosa"]');
+            checkboxes.forEach(function(checkbox, index) {
                 checkbox.checked = !checkbox.checked;
             });
+        });
+    </script>
+
+    <script>
+        document.getElementById('controllerSelect').addEventListener('change', function() {
+            const selectedValue = this.value;
+            let baseUrl = window.location.protocol + "//" + window.location.host + window.location.pathname;
+            let searchParams = new URLSearchParams(window.location.search);
+            searchParams.set('page', selectedValue);
+            let newQueryString = searchParams.toString();
+
+            window.location.href = baseUrl + '?' + newQueryString;
         });
     </script>
 

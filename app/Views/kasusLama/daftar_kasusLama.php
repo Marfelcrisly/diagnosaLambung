@@ -34,8 +34,8 @@
                                         <option value="100" <?= (old('page', $page) == '100') ? 'selected disabled' : ''; ?>>100</option>
                                     </select>
                                 </div>
-                                <a href="<?= base_url('tambah_gejala') ?>" class="btn btn-outline-primary btn-sm d-inline mr-2 ml-2" style="width: auto; max-width: 50px;"><span><i class="fas fa-plus"></i> </span></a>
-                                <a href="<?= base_url('hapus_semua_gejala') ?>" class="btn btn-block btn-outline-danger btn-sm d-inline mr-2" style="width: auto; max-width: 50px;" onclick="return confirm('apakah anda yakin menghapus semua data?')"><span><i class="fas fa-trash"></i> </span></a>
+                                <a href="<?= base_url('tambah_kasusLama') ?>" class="btn btn-outline-primary btn-sm d-inline mr-2 ml-2" style="width: auto; max-width: 50px;"><span><i class="fas fa-plus"></i> </span></a>
+                                <a href="<?= base_url('hapus_semua_kasusLama') ?>" class="btn btn-block btn-outline-danger btn-sm d-inline mr-2" style="width: auto; max-width: 50px;" onclick="return confirm('apakah anda yakin menghapus semua data?')"><span><i class="fas fa-trash"></i> </span></a>
                                 <div class="input-group input-group-sm">
                                     <input type="text" class="form-control" placeholder="Keyword pencarian.." name="keyword" value="<?= old('keyword'); ?>">
                                     <div class="input-group-append">
@@ -51,9 +51,9 @@
                                 <thead>
                                     <tr>
                                         <th>No.</th>
-                                        <th>Kode</th>
-                                        <th>Nama</th>
-                                        <th>Deskripsi</th>
+                                        <th>Nama Penyakit</th>
+                                        <th>Gejala</th>
+                                        <th>Bobot</th>
                                         <th style="text-align: center;">Aksi</th>
                                     </tr>
                                 </thead>
@@ -62,12 +62,23 @@
                                     <?php foreach ($data as $dt) : ?>
                                         <tr>
                                             <td><?= $i++ ?></td>
-                                            <td><?= $dt['kode'] ?></td>
-                                            <td style="width: 20%;"><?= $dt['nama'] ?></td>
-                                            <td style="width: 50%;"><?= $dt['deskripsi'] ?></td>
+                                            <td><?= $dt['nama_penyakit']; ?></td>
+                                            <td>
+                                                <?php foreach ($dt['gejala'] as $g) : ?>
+                                                    <?= $g['nama']; ?>
+                                                    <hr>
+                                                <?php endforeach; ?>
+                                            </td>
                                             <td style="text-align: center;">
-                                                <a type="button" href="<?= base_url('edit_gejala/' . $dt['id']); ?>" class="btn btn-block btn-outline-warning btn-sm d-inline" style="width: auto; max-width: 100;"><span><i class="fas fa-edit"></i> </span></a>
-                                                <form action="<?= base_url('hapus_gejala/' . $dt['id']); ?>" method="post" class="d-inline">
+                                                <?php foreach ($dt['bobot'] as $b) : ?>
+                                                    <?= $b['nilai'] ?>
+                                                    <hr>
+                                                <?php endforeach; ?>
+
+                                            </td>
+                                            <td style="text-align: center;">
+                                                <a type="button" href="<?= base_url('edit_kasusLama/' . $dt['id']); ?>" class="btn btn-block btn-outline-warning btn-sm d-inline" style="width: auto; max-width: 100;"><span><i class="fas fa-edit"></i> </span></a>
+                                                <form action="<?= base_url('hapus_kasusLama/' . $dt['id']); ?>" method="post" class="d-inline">
                                                     <?= csrf_field(); ?>
                                                     <input type="hidden" name="_method" value="DELETE">
                                                     <button type="submit" class="btn btn-block btn-outline-danger btn-sm d-inline ml-2" onclick="return confirm('apakah anda yakin')" style="width: auto; max-width: 100;"><span><i class="fas fa-trash-alt"></i> </span></button>
@@ -78,12 +89,13 @@
                                 </tbody>
                             </table>
                             <div class="text-center d-flex justify-content-center mt-2">
-                                <?= $pager->links('gejala', 'paginations') ?>
+                                <?= $pager->links('kasusLama', 'paginations') ?>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
     </section>
 </div>
 
