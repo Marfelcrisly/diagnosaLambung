@@ -104,7 +104,7 @@ _modules/*
 nbproject/
 build/
 nbbuild/
-dist/
+dist/ --force
 nbdist/
 nbactions.xml
 nb-configuration.xml
