@@ -6,18 +6,32 @@ use CodeIgniter\API\ResponseTrait;
 
 use App\Models\ModelUsers;
 use App\Models\ModelGejala;
+use App\Models\ModelPenyakit;
+use App\Models\ModelMenu;
+use App\Models\ModelBobot;
+use App\Models\ModelRelasi;
+use App\Models\ModelKasusLama;
+use App\Models\ModelDiagnosa;
+use App\Models\ModelAksesMenu;
 use Myth\Auth\Entities\User;
 
 class Home extends BaseController
 {
     use ResponseTrait;
 
-    protected $modelUsers, $modelGejala;
+    protected $modelUsers, $modelGejala, $modelMenu, $modelPenyakit, $modelBobot, $modelRelasi, $modelKasusLama, $modelDiagnosa, $modelAksesMenu;
 
     public function __construct()
     {
         $this->modelUsers = new ModelUsers();
         $this->modelGejala = new ModelGejala();
+        $this->modelPenyakit = new ModelPenyakit();
+        $this->modelMenu = new ModelMenu();
+        $this->modelBobot = new ModelBobot();
+        $this->modelRelasi = new ModelRelasi();
+        $this->modelKasusLama = new ModelKasusLama();
+        $this->modelDiagnosa = new ModelDiagnosa();
+        $this->modelAksesMenu = new ModelAksesMenu();
     }
     public function index()
     {
@@ -36,7 +50,40 @@ class Home extends BaseController
                 'title' => 'Isi Form Diagnosa',
             ];
         }
+
+        $menu = $this->modelMenu->getMenu()->findAll();
+        $jumlahData = [];
+
+        foreach ($menu as $m) {
+            if ($m['name'] == 'Data Pengguna') {
+                $jumlahData[$m['name']] = $this->modelUsers->countAll();
+            } elseif ($m['name'] == 'Data Pasien') {
+                $jumlahData[$m['name']] = $this->modelUsers->getUsersRole()->where('role', 'pasien')->countAll();
+            } elseif ($m['name'] == 'Data Gejala') {
+                $jumlahData[$m['name']] = $this->modelGejala->countAll();
+            } elseif ($m['name'] == 'Data Penyakit') {
+                $jumlahData[$m['name']] = $this->modelPenyakit->countAll();
+            } elseif ($m['name'] == 'Data Menu') {
+                $jumlahData[$m['name']] = $this->modelMenu->countAll();
+            } elseif ($m['name'] == 'Data Aturan') {
+                $jumlahData[$m['name']] = $this->modelRelasi->countAll();
+            } elseif ($m['name'] == 'Data Bobot') {
+                $jumlahData[$m['name']] = $this->modelBobot->countAll();
+            } elseif ($m['name'] == 'Data Kasus Baru') {
+                $jumlahData[$m['name']] = $this->modelDiagnosa->countAll();
+            } elseif ($m['name'] == 'Data Akses Menu') {
+                $jumlahData[$m['name']] = $this->modelAksesMenu->countAll();
+            } elseif ($m['name'] == 'Data Kasus Lama') {
+                $jumlahData[$m['name']] = $this->modelKasusLama->countAll();
+            }
+        }
+
         $data['namaGejala'] = $namaGejala;
+
+        $data['menu'] = $menu;
+
+        $data['jumlahData'] = $jumlahData;
+
         return view('home/dashboard', $data);
     }
 

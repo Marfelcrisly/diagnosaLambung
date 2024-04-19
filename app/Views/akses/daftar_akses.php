@@ -25,7 +25,7 @@
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-body">
-                            <table id="example2" class="table table-bordered table-hover">
+                            <!-- <table id="example2" class="table table-bordered table-hover">
                                 <thead>
                                     <tr>
                                         <th>Menu</th>
@@ -48,6 +48,55 @@
                                                             foreach ($statusMenus[$role['name']] as $statusMenu) {
                                                                 if ($statusMenu['menu_name'] == $m['name']) {
                                                                     $checked = 'checked';
+                                                                    break;
+                                                                }
+
+                                                                if (in_groups('admin') && $m['name'] == 'Data Akses Menu') {
+                                                                    $checked = 'disabled';
+                                                                    break;
+                                                                }
+                                                            }
+                                                            ?>
+                                                            <input type="hidden" name="roleId" value="<?= $role['id'] ?>">
+                                                            <input type="hidden" name="menuId" value="<?= $m['id'] ?>">
+                                                            <input type="checkbox" name="status" class="form-check-input active-switch" <?= $checked; ?>>
+                                                            <label class="form-check-label"></label>
+                                                        </div>
+                                                    </form>
+                                                </td>
+                                            <?php endforeach; ?>
+                                        </tr>
+                                    <?php endforeach; ?>
+                                </tbody>
+                            </table> -->
+                            <table id="example2" class="table table-bordered table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Menu</th>
+                                        <?php foreach ($roles as $role) : ?>
+                                            <th style="text-align: center;"><?= $role['description']; ?></th>
+                                        <?php endforeach; ?>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php foreach ($menu as $m) : ?>
+                                        <tr>
+                                            <td><?= $m['name']; ?></td>
+                                            <?php foreach ($roles as $role) : ?>
+                                                <td style="text-align: center;">
+                                                    <form id="form<?= $role['id'] ?><?= $m['id'] ?>" action="<?= base_url('aksi_simpan_status'); ?>" method="post">
+                                                        <?= csrf_field(); ?>
+                                                        <div class="form-check">
+                                                            <?php
+                                                            $checked = '';
+                                                            foreach ($statusMenus[$role['name']] as $statusMenu) {
+                                                                if ($statusMenu['menu_name'] == $m['name']) {
+                                                                    $checked = 'checked';
+                                                                    break;
+                                                                }
+
+                                                                if (in_groups('admin') && $m['name'] == 'Data Akses Menu') {
+                                                                    $checked = 'disabled';
                                                                     break;
                                                                 }
                                                             }

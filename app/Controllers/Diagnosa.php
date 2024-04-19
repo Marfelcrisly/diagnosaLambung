@@ -129,23 +129,24 @@ class Diagnosa extends BaseController
             }
             $jumlahNilaiSimilarity[] = $jumlahSimilarity;
             $jumlahNilaiBobot[] = $jumlahBobot;
-
+            
             $persentase[] = [
                 'penyakit_id' => $kasus['penyakit_id'],
                 'jumlah_nilai_similarity' => $jumlahSimilarity,
                 'jumlah_nilai_bobot' => $jumlahBobot
             ];
         }
-
+        
         foreach ($jumlahNilaiSimilarity as $i => $nilai) {
             $nilaiBobot = $jumlahNilaiBobot[$i];
-
+            
             if ($nilaiBobot !== 0) {
                 $persentase[$i]['persentase'] = ($nilai / $nilaiBobot) * 100;
             } else {
                 $persentase[$i]['persentase'] = 0;
             }
         }
+
 
         $maxPersentase = max(array_column($persentase, 'persentase'));
         $penyakitIdTerbesarIndex = array_search($maxPersentase, array_column($persentase, 'persentase'));

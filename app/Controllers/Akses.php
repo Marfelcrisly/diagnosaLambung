@@ -23,7 +23,7 @@ class Akses extends BaseController
 
     public function akses_menu()
     {
-        $menu = $this->modelMenu->getMenu()->findAll();
+        $menu = $this->modelMenu->getMenu()->orderBy('name', 'asc')->findAll();
 
         $roles = $this->modelRole->getRole()->findAll();
 
@@ -62,12 +62,12 @@ class Akses extends BaseController
                 ];
                 $this->modelAksesMenu->insert($data);
             }
-            session()->setFlashdata('pesan', 'Data berhasil ditambah.');
+            // session()->setFlashdata('pesan', 'Data berhasil ditambah.');
         } else {
             if ($existingAksesMenu) {
                 $this->modelAksesMenu->delete($existingAksesMenu['id']);
             }
-            session()->setFlashdata('pesan', 'Data berhasil dihapus');
+            // session()->setFlashdata('pesan', 'Data berhasil dihapus');
         }
 
         return redirect()->to('akses_menu');

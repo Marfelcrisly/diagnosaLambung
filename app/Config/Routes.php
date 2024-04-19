@@ -80,3 +80,5 @@ $routes->post('/status/(:num)', 'Menu::status/$1', ['filter' => 'role:admin']);
 $routes->get('/reset_password/(:num)', 'Pengguna::reset_password/$1', ['filter' => 'role:admin']);
 
 $routes->post('/aksi_simpan_status', 'Akses::aksi_simpan_status', ['filter' => 'role:admin']);
+
+$routes->post('/otentikasi', 'Otentikasi::index');

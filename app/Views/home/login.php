@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="../../dist/css/adminlte.min.css">
 </head>
 
-<body class="hold-transition login-page">
+<body class="hold-transition login-page" style="background-color: #79d1ff;">
     <div class="login-box">
         <div class="login-logo">
             <span><b><?= lang('Auth.loginTitle') ?></b></span>

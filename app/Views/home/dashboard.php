@@ -12,25 +12,59 @@
             </div>
         </div>
     </div>
+
+    <?php if (in_groups('admin')) : ?>
+        <section class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <?php
+                    $bgColors = ['info', 'success', 'warning', 'danger', 'primary', 'secondary', 'light', 'purple', 'teal', 'indigo', 'pink', 'cyan', 'yellow', 'orange'];
+                    $colorIndex = 0;
+                    ?>
+                    <?php foreach ($menu as $m) : ?>
+                        <?php if ($m['name'] != 'Dashboard') : ?>
+                            <div class="col-lg-3 col-6">
+                                <div class="small-box bg-<?= $bgColors[$colorIndex]; ?>">
+                                    <div class="inner">
+                                        <h3><?= $jumlahData[$m['name']]; ?></h3>
+                                        <p><?= $m['name']; ?></p>
+                                    </div>
+                                    <div class="icon">
+                                        <i class="ion <?= $m['icon']; ?>"></i>
+                                    </div>
+                                    <a href="<?= base_url($m['url']); ?>" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                                </div>
+                            </div>
+                            <?php
+                            $colorIndex = ($colorIndex + 1) % count($bgColors);
+                            ?>
+                        <?php endif; ?>
+                    <?php endforeach; ?>
+
+                </div>
+            </div>
+        </section>
+    <?php endif; ?>
+
     <?php if (in_groups('pasien')) : ?>
         <section class="content">
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-md-12">
                         <div class="card card-primary">
                             <div class="card-header">
                                 <h3 class="card-title">Data Diagnosa</h3>
                             </div>
                             <form action="<?= base_url('simpan_diagnosa'); ?>" method="post">
                                 <?= csrf_field() ?>
-                                <div class="card-body">
+                                <div class="card-body col-md-8">
                                     <div class="form-group row">
-                                        <div class="col-md-4">
+                                        <div class="col-md-6">
                                             <label for="">Nama Pasien</label>
                                             <input type="text" class="form-control" name="" value="<?= user()->name; ?>" readonly>
                                             <input type="hidden" class="form-control" name="pasien_id" value="<?= user()->id; ?>" readonly>
                                         </div>
-                                        <div class="col-md-4">
+                                        <div class="col-md-6">
                                             <label for="">Tanggal</label>
                                             <input type="text" class="form-control" name="tanggal" value="<?= date('Y-m-d'); ?>" readonly>
                                         </div>
