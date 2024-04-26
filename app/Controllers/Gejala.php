@@ -24,7 +24,7 @@ class Gejala extends BaseController
         $gejala = $this->modelGejala->getGejala()->orderBy('kode', 'asc');
 
         if ($keyword) {
-            $gejala = $gejala->like('nama', $keyword);
+            $gejala = $gejala->like('nama', $keyword)->orLike('kode', $keyword);
         }
 
         $page = $this->request->getVar('page') ? $this->request->getVar('page') : 10;

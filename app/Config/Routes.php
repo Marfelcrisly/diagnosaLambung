@@ -10,15 +10,19 @@ $routes->get('/profile', 'Home::profile');
 
 $routes->get('/daftar_menu', 'Menu::daftar_menu', ['filter' => 'role:admin']);
 $routes->get('/daftar_pengguna', 'Pengguna::daftar_pengguna', ['filter' => 'role:admin']);
+$routes->post('/daftar_pengguna', 'Pengguna::daftar_pengguna', ['filter' => 'role:admin']);
 $routes->get('/daftar_pasien', 'Pasien::daftar_pasien', ['filter' => 'role:admin']);
+$routes->post('/daftar_pasien', 'Pasien::daftar_pasien', ['filter' => 'role:admin']);
 $routes->get('/daftar_gejala', 'Gejala::daftar_gejala', ['filter' => 'role:admin']);
-$routes->post('/daftar_gejala', 'Gejala::daftar_gejala', ['filter' => 'role:admin']);
 $routes->get('/daftar_penyakit', 'Penyakit::daftar_penyakit', ['filter' => 'role:admin']);
 $routes->get('/daftar_relasi', 'Relasi::daftar_relasi', ['filter' => 'role:admin']);
 $routes->get('/daftar_bobot', 'Bobot::daftar_bobot', ['filter' => 'role:admin']);
 $routes->get('/daftar_diagnosa', 'Diagnosa::daftar_diagnosa', ['filter' => 'role:admin']);
 $routes->get('/akses_menu', 'Akses::akses_menu', ['filter' => 'role:admin']);
 $routes->get('/daftar_kasusLama', 'KasusLama::daftar_kasusLama', ['filter' => 'role:admin']);
+
+$routes->post('/daftar_menu', 'Menu::daftar_menu', ['filter' => 'role:admin']);
+$routes->post('/daftar_gejala', 'Gejala::daftar_gejala', ['filter' => 'role:admin']);
 
 $routes->get('/tambah_menu', 'Menu::tambah_menu', ['filter' => 'role:admin']);
 $routes->get('/tambah_gejala', 'Gejala::tambah_gejala', ['filter' => 'role:admin']);

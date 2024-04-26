@@ -24,7 +24,19 @@ class Pasien extends BaseController
         $pasien = $this->modelPasien->select('users.id, username, no_rm, users.name, jk, umur')
             ->join('auth_groups_users', 'auth_groups_users.user_id = users.id')
             ->join('auth_groups', 'auth_groups.id = auth_groups_users.group_id')
-            ->where('auth_groups.name', 'pasien');
+            ->where('auth_groups.name', 'pasien')
+            ->orderBy('users.name', 'ASC');
+
+        $keyword = $this->request->getVar('keyword');
+
+        if ($keyword) {
+            $pasien = $pasien->groupStart()
+                         ->like('username', $keyword)
+                         ->orLike('email', $keyword)
+                         ->orLike('users.name', $keyword)
+                         ->orLike('jk', $keyword)
+                         ->groupEnd(); 
+        }
 
         $page = $this->request->getVar('page') ? $this->request->getVar('page') : 10;
         $data = $pasien->paginate($page, 'pasien', $currentPage);

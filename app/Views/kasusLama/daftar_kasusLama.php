@@ -62,28 +62,45 @@
                                     <?php foreach ($data as $dt) : ?>
                                         <tr>
                                             <td><?= $i++ ?></td>
-                                            <td><?= $dt['nama_penyakit']; ?></td>
+                                            <td>
+                                                <div class="item-box">
+                                                    <?= $dt['nama_penyakit']; ?>
+                                                </div>
+                                            </td>
+                                            <style>
+                                                .item-box {
+                                                    border: 2px solid black;
+                                                    padding: 8px;
+                                                    margin-bottom: 5px;
+                                                    background-color: silver;
+                                                }
+                                            </style>
                                             <td>
                                                 <?php foreach ($dt['gejala'] as $g) : ?>
-                                                    <?= $g['nama']; ?>
-                                                    <hr>
+                                                    <div class="item-box">
+                                                        <?= $g['nama']; ?>
+                                                    </div>
                                                 <?php endforeach; ?>
                                             </td>
                                             <td style="text-align: center;">
                                                 <?php foreach ($dt['bobot'] as $b) : ?>
-                                                    <?= $b['nilai'] ?>
-                                                    <hr>
+                                                    <div class="item-box">
+                                                        <?= $b['nilai'] ?>
+                                                    </div>
                                                 <?php endforeach; ?>
+                                            </td>
 
-                                            </td>
                                             <td style="text-align: center;">
-                                                <a type="button" href="<?= base_url('edit_kasusLama/' . $dt['id']); ?>" class="btn btn-block btn-outline-warning btn-sm d-inline" style="width: auto; max-width: 100;"><span><i class="fas fa-edit"></i> </span></a>
-                                                <form action="<?= base_url('hapus_kasusLama/' . $dt['id']); ?>" method="post" class="d-inline">
-                                                    <?= csrf_field(); ?>
-                                                    <input type="hidden" name="_method" value="DELETE">
-                                                    <button type="submit" class="btn btn-block btn-outline-danger btn-sm d-inline ml-2" onclick="return confirm('apakah anda yakin')" style="width: auto; max-width: 100;"><span><i class="fas fa-trash-alt"></i> </span></button>
-                                                </form>
+                                                <div class="btn-group" role="group" aria-label="Basic example">
+                                                    <a href="<?= base_url('edit_kasusLama/' . $dt['id']); ?>" class="btn btn-outline-warning btn-sm mr-1" style="width: 100%;"><i class="fas fa-edit"></i></a>
+                                                    <form action="<?= base_url('hapus_kasusLama/' . $dt['id']); ?>" method="post" class="d-inline-block" style="width: 100%;">
+                                                        <?= csrf_field(); ?>
+                                                        <input type="hidden" name="_method" value="DELETE">
+                                                        <button type="submit" class="btn btn-outline-danger btn-sm" onclick="return confirm('Apakah anda yakin?')"><i class="fas fa-trash-alt"></i></button>
+                                                    </form>
+                                                </div>
                                             </td>
+
                                         </tr>
                                     <?php endforeach; ?>
                                 </tbody>

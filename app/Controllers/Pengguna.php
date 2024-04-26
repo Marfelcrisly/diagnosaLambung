@@ -13,7 +13,7 @@ use Myth\Auth\Models\UserModel;
 class Pengguna extends BaseController
 {
     use RequestTrait;
-    
+
     /**
      * @var AuthConfig
      */
@@ -32,15 +32,28 @@ class Pengguna extends BaseController
 
     public function daftar_pengguna()
     {
-        $pengguna = $this->modelUsers->select('users.id, email, username, password_hash, auth_groups.description as role')
+        $currentPage = $this->request->getVar('page_users') ? $this->request->getVar('page_users') : 1;
+        $pengguna = $this->modelUsers->select('users.id, email, username, password_hash, auth_groups.description as role, users.jk')
             ->join('auth_groups_users', 'auth_groups_users.user_id = users.id')
             ->join('auth_groups', 'auth_groups.id = auth_groups_users.group_id')
-            ->orderBy('username', 'asc')
-            ->findAll();
+            ->orderBy('username', 'asc');
+
+        $keyword = $this->request->getVar('keyword');
+
+        if ($keyword) {
+            $pengguna = $pengguna->like('username', $keyword)->orLike('email', $keyword)->orLike('users.name', $keyword)->orLike('jk', $keyword);
+        }
+
+        $page = $this->request->getVar('page') ? $this->request->getVar('page') : 10;
+        $data = $pengguna->paginate($page, 'users', $currentPage);
 
         $data = [
             'title' => 'Data Pengguna',
-            'data'  => $pengguna
+            'data'  => $data,
+            'pager'      => $this->modelUsers->pager,
+            'currentPage' => $currentPage,
+            'page'       => $page,
+            'keyword'   => $keyword
         ];
 
         return view('pengguna/daftar_pengguna', $data);

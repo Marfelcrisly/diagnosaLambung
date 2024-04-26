@@ -49,12 +49,12 @@
                             <table id="example2" class="table table-bordered table-hover">
                                 <thead>
                                     <tr>
-                                        <th style="width: auto; max-width: 10px; text-align: center;">No.</th>
+                                        <th style="text-align: center;">No.</th>
                                         <th>No. RM</th>
                                         <th>Username</th>
                                         <th>Nama Lengkap</th>
                                         <th>Jenis Kelamin</th>
-                                        <th style="width: auto; max-width: 10px; text-align: center;">Umur</th>
+                                        <th style="text-align: center;">Umur</th>
                                         <th style="text-align: center;">Aksi</th>
                                     </tr>
                                 </thead>

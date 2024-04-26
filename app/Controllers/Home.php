@@ -58,7 +58,7 @@ class Home extends BaseController
             if ($m['name'] == 'Data Pengguna') {
                 $jumlahData[$m['name']] = $this->modelUsers->countAll();
             } elseif ($m['name'] == 'Data Pasien') {
-                $jumlahData[$m['name']] = $this->modelUsers->getUsersRole()->where('role', 'pasien')->countAll();
+                $jumlahData[$m['name']] = $this->modelUsers->getUsersRole()->where('auth_groups.name', 'pasien')->countAllResults();
             } elseif ($m['name'] == 'Data Gejala') {
                 $jumlahData[$m['name']] = $this->modelGejala->countAll();
             } elseif ($m['name'] == 'Data Penyakit') {

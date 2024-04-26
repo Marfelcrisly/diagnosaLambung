@@ -27,6 +27,12 @@ class Menu extends BaseController
         $currentPage = $this->request->getVar('page_menu') ? $this->request->getVar('page_menu') : 1;
         $menu = $this->modelMenu->getMenu()->orderBy('name', 'asc');
 
+        $keyword = $this->request->getVar('keyword');
+
+        if ($keyword) {
+            $menu = $menu->like('name', $keyword);
+        }
+
         $role = $this->db->table('auth_groups')->select('*')->get()->getResultArray();
 
         $page = $this->request->getVar('page') ? $this->request->getVar('page') : 10;
@@ -39,6 +45,7 @@ class Menu extends BaseController
             'pager'      => $this->modelMenu->pager,
             'currentPage' => $currentPage,
             'page'       => $page,
+            'keyword'   => $keyword
         ];
 
         return view('menu/daftar_menu', $data);
